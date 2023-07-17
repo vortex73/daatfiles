@@ -1,0 +1,6 @@
+# Enable tabbed previews
+set preview-cmd "nnn -p"
+
+# Enable live preview updates
+set preview-refresh true
+
