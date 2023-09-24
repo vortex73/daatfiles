@@ -11,4 +11,9 @@ vim.opt.incsearch = true
 vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.updatetime = 0
+vim.cmd('set tabstop=4')
+vim.cmd('set shiftwidth=4')
+vim.cmd('set expandtab')
+vim.cmd('set noshowmode')
+vim.opt.laststatus = 0
 vim.api.nvim_set_option("clipboard","unnamed")

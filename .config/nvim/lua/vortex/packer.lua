@@ -13,6 +13,9 @@ return require('packer').startup(function(use)
 	  requires = { {'nvim-lua/plenary.nvim'} }
   })
   use ("rebelot/kanagawa.nvim")
+  use {'sainnhe/sonokai'}
+  use 'xiyaowong/transparent.nvim'
+  use 'fedepujol/move.nvim'
   use('nvim-treesitter/nvim-treesitter', {run= ':TSUpdate'})
   use ('mbbill/undotree')
   use {
@@ -36,9 +39,10 @@ return require('packer').startup(function(use)
 		  {'L3MON4D3/LuaSnip'},             -- Required
 		  {'rafamadriz/friendly-snippets'}, -- Optional
 	  }
-	  
-  }  
+
+  }
   use { "goolord/alpha-nvim", commit = "0bb6fc0646bcd1cdb4639737a1cee8d6e08bcc31" }
+  use {"christoomey/vim-tmux-navigator"}
   use {
   'nvim-lualine/lualine.nvim',
   requires = { 'nvim-tree/nvim-web-devicons', opt = true }
@@ -48,4 +52,36 @@ return require('packer').startup(function(use)
 	  "windwp/nvim-autopairs",
 	  config = function() require("nvim-autopairs").setup {} end
   }
+  use 'voldikss/vim-floaterm'
+  -- Using packer.nvim
+  use {
+	  'johnfrankmorgan/whitespace.nvim',
+	  config = function ()
+		  require('whitespace-nvim').setup({
+			  -- configuration options and their defaults
+
+			  -- `highlight` configures which highlight is used to display
+			  -- trailing whitespace
+			  highlight = 'DiffDelete',
+
+			  -- `ignored_filetypes` configures which filetypes to ignore when
+			  -- displaying trailing whitespace
+			  ignored_filetypes = { 'TelescopePrompt', 'Trouble', 'help' },
+
+			  -- `ignore_terminal` configures whether to ignore terminal buffers
+			  ignore_terminal = true,
+		  })
+
+		  -- remove trailing whitespace with a keybinding
+		  vim.keymap.set('n', '<leader>tr', require('whitespace-nvim').trim)
+	  end
+  }
+  use {'brenoprata10/nvim-highlight-colors',
+  require('nvim-highlight-colors').setup {}
+  }
+ use 'mfussenegger/nvim-jdtls'
+ use ('tpope/vim-vinegar')
+  use('neovim/nvim-lspconfig')
+  use('jose-elias-alvarez/null-ls.nvim')
+  use('MunifTanjim/prettier.nvim')
   end)
