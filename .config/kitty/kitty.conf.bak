@@ -6,7 +6,7 @@
 #: individual font faces and even specify special fonts for particular
 #: characters.
 
- font_family      VictorMono-Bold
+ font_family      JetBrainsMonoNerdFont-Light
 # bold_font        auto
 # italic_font      auto
 # bold_italic_font auto
@@ -2339,9 +2339,3 @@ listen_on unix:@kitty
 #: }}}
 
 #: }}}
-
-
-# BEGIN_KITTY_THEME
-# Hardcore
-include current-theme.conf
-# END_KITTY_THEME
