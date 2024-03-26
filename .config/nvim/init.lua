@@ -3,10 +3,10 @@ require "paq" {
     "savq/paq-nvim",
     'sainnhe/sonokai',
     'onsails/lspkind-nvim',
+    'ibhagwan/fzf-lua',
     {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
     'hrsh7th/cmp-nvim-lsp',
     'windwp/nvim-autopairs',
-    'fedepujol/move.nvim',
     'hrsh7th/cmp-path',
     "lukas-reineke/indent-blankline.nvim",
     "neovim/nvim-lspconfig",
@@ -18,8 +18,28 @@ require "paq" {
     'L3MON4D3/LuaSnip',
     { "lervag/vimtex", opt = true },
     { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+    'fedepujol/move.nvim',
+    'nvim-lua/plenary.nvim',
+    'epwalsh/obsidian.nvim',
 }
 require 'lsp'
+require('move').setup({
+	line = {
+		enable = true, -- Enables line movement
+		indent = true  -- Toggles indentation
+	},
+	block = {
+		enable = true, -- Enables block movement
+		indent = true  -- Toggles indentation
+	},
+	word = {
+		enable = true, -- Enables word movement
+	},
+	char = {
+		enable = false -- Enables char movement
+	}
+})
+
 vim.g.mapleader = " "
 vim.keymap.set("n","<leader>tf",vim.cmd.FloatermToggle)
 vim.keymap.set("n","<leader>tu",vim.cmd.UndotreeToggle)
@@ -39,6 +59,7 @@ vim.keymap.set('n', '<C-l>', ':TmuxNavigateRight<CR>',opts)
 vim.keymap.set('n', '<C-j>', ':TmuxNavigateDown<CR>',opts)
 vim.keymap.set('n', '<C-k>', ':TmuxNavigateUp<CR>',opts)
 vim.keymap.set("i", "jk", "<ESC>", opts)
+vim.keymap.set("n", "<c-P>","<cmd>lua require('fzf-lua').files()<CR>", { silent = true })
 vim.cmd.colorscheme('sonokai')
 vim.opt.clipboard = "unnamedplus"
 vim.api.nvim_set_option("clipboard","unnamed")
@@ -58,6 +79,7 @@ vim.opt.incsearch = true
 vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.updatetime = 0
+vim.opt.conceallevel = 1
 vim.cmd('set tabstop=4')
 vim.cmd('set shiftwidth=4')
 vim.cmd('set expandtab')

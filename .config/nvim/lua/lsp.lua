@@ -35,6 +35,10 @@ require('lspconfig').pyright.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+require('lspconfig').zls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
 require('lspconfig').tsserver.setup{
     on_attach = on_attach,
     settings = {
@@ -70,6 +74,15 @@ require('lspconfig').lua_ls.setup({
 
 -- completion setup
 
+require("obsidian").setup({
+    workspaces = {
+        {
+            name = "personal",
+            path = "~/vaults/personal",
+        },
+    },
+
+})
 local cmp = require'cmp'
 local lspkind = require 'lspkind'
 local cmp_action = require('lsp-zero').cmp_action()
