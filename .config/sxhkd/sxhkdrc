@@ -22,11 +22,6 @@ XF86AudioRaiseVolume
 XF86AudioMute
   pactl set-sink-mute 0 toggle
 
-#Brightness Control
-ctrl + shift + b
-    brightnessctl set 0
-ctrl + shift + w
-    brightnessctl set 600
 
 XF86MonBrightnessUp
 	brightnessctl set +10%

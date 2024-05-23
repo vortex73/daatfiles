@@ -1,1 +1,8 @@
 /.config/BraveSoftware
+/.config/alacritty.toml
+/.config/dconf/
+/.config/gtk-2.0
+/.config/mimeapps.list
+/.config/nitrogen
+/.config/pavucontrol*
+/.config/pulse
