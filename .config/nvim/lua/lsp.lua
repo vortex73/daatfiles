@@ -31,6 +31,22 @@ require('lspconfig').clangd.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+require('lspconfig').emmet_language_server.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+require('lspconfig').tailwindcss.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+require('lspconfig').tsserver.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+require('lspconfig').html.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
 require('lspconfig').pyright.setup {
     on_attach = on_attach,
     capabilities = capabilities,

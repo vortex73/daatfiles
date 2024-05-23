@@ -2,6 +2,7 @@ vim.loader.enable()
 require "paq" {
     "savq/paq-nvim",
     'sainnhe/sonokai',
+    'ray-x/web-tools.nvim',
     'onsails/lspkind-nvim',
     'ibhagwan/fzf-lua',
     {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
@@ -23,6 +24,7 @@ require "paq" {
     'epwalsh/obsidian.nvim',
 }
 require 'lsp'
+require 'html_live'
 require('move').setup({
 	line = {
 		enable = true, -- Enables line movement
@@ -62,7 +64,6 @@ vim.keymap.set("i", "jk", "<ESC>", opts)
 vim.keymap.set("n", "<c-P>","<cmd>lua require('fzf-lua').files()<CR>", { silent = true })
 vim.cmd.colorscheme('sonokai')
 vim.opt.clipboard = "unnamedplus"
-vim.api.nvim_set_option("clipboard","unnamed")
 require('nvim-autopairs').setup()
 require("ibl").setup()
 vim.opt.guicursor = "i:block" 

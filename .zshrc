@@ -3,7 +3,6 @@
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ -n "$DISPLAY" ]; then
   exec tmux
 fi
-
 HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
@@ -61,8 +60,9 @@ unsetopt prompt_cr prompt_sp
 zstyle ':vcs_info:git:*' formats ' on %F{82}%b%f'
 setopt PROMPT_SUBST
 export PATH=$PATH:/home/vorrtt3x/.cargo/bin
-export PATH=$PATH:/home/vorrtt3x/cloned/zig-linux-x86_64-0.12.0-dev.3124+9e402704e
+export PATH=$PATH:/home/vorrtt3x/cloned/ziglang
 export PATH=$PATH:/home/vorrtt3x/cloned/zls/zig-out/bin
+export PATH=$PATH:/home/vorrtt3x/dev/ludicrosity/zig-out/bin
 export NNN_BMS="d:$HOME/Documents;u:/home/user/Cam Uploads;D:$HOME/Downloads/"
 alias tasks="nvim ~/.tasks.md"
 alias la="eza -la --git-repos --icons"
@@ -73,4 +73,10 @@ alias lc="eza --git-ignore --tree --icons"
 PROMPT='%B%F{130}%n%f [%F{82}%~%f]${vcs_info_msg_0_} %F{50}% %f '
 alias armsim="mono ~/Downloads/ARMSim.exe"
 source /home/vorrtt3x/cloned/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#zprof
+
+#DistroBuild
+export LFS=/mnt/salazar
+
+
+alias ideas="bat ~/ideas.md"
+
