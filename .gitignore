@@ -6,3 +6,5 @@
 /.config/nitrogen
 /.config/pavucontrol*
 /.config/pulse
+/.config/Qt*
+/.config/flameshot*
