@@ -1,8 +1,8 @@
 -- lsp keymaps
 local on_attach = function(client, bufnr)
     local bufopts = {noremap=true, silent=true, buffer=bufnr}
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', 'gD', ':FzfLua lsp_declarations<CR>', bufopts)
+    vim.keymap.set('n', 'gd', ':FzfLua lsp_definitions<CR>', bufopts)
     vim.keymap.set('n', 'go', '<c-t>', bufopts)
     vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
     vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
@@ -55,6 +55,10 @@ require('lspconfig').zls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+require('lspconfig').nimls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
 require('lspconfig').tsserver.setup{
     on_attach = on_attach,
     settings = {
@@ -95,6 +99,10 @@ require("obsidian").setup({
         {
             name = "personal",
             path = "~/vaults/personal",
+        },
+        {
+            name = "musings",
+            path = "~/dev/writeups/",
         },
     },
 

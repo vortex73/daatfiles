@@ -61,6 +61,8 @@ zstyle ':vcs_info:git:*' formats ' on %F{82}%b%f'
 setopt PROMPT_SUBST
 export PATH=$PATH:/home/vorrtt3x/.cargo/bin
 export PATH=$PATH:/home/vorrtt3x/cloned/ziglang
+export PATH=$PATH:/home/vorrtt3x/.nimble/bin
+export PATH=$PATH:/usr/lib/xscreensaver
 export PATH=$PATH:/home/vorrtt3x/cloned/zls/zig-out/bin
 export PATH=$PATH:/home/vorrtt3x/dev/ludicrosity/zig-out/bin
 export NNN_BMS="d:$HOME/Documents;u:/home/vorrtt3x/Cam Uploads;D:$HOME/Downloads/"
@@ -79,4 +81,5 @@ export LFS=/mnt/salazar
 
 
 alias ideas="bat ~/ideas.md"
+#zprof
 

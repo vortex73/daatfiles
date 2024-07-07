@@ -24,7 +24,6 @@ require "paq" {
     'epwalsh/obsidian.nvim',
 }
 require 'lsp'
-require 'html_live'
 require('move').setup({
 	line = {
 		enable = true, -- Enables line movement
@@ -42,8 +41,17 @@ require('move').setup({
 	}
 })
 
+require 'nvim-treesitter.configs'.setup{
+    ensure_installed = {"c","cpp","lua","python","markdown","zig","nim","html","css"},
+    sync_install = false,
+    auto_install = true,
+    highlight = {
+        enable = true,
+    }
+}
+
+-- My Keybindings
 vim.g.mapleader = " "
-vim.keymap.set("n","<leader>tf",vim.cmd.FloatermToggle)
 vim.keymap.set("n","<leader>tu",vim.cmd.UndotreeToggle)
 vim.keymap.set("n","<leader>pv",vim.cmd.Ex)
 vim.keymap.set('n', '<A-j>', ':MoveLine(1)<CR>', opts)
@@ -60,8 +68,19 @@ vim.keymap.set('n', '<C-h>', ':TmuxNavigateLeft<CR>',opts)
 vim.keymap.set('n', '<C-l>', ':TmuxNavigateRight<CR>',opts)
 vim.keymap.set('n', '<C-j>', ':TmuxNavigateDown<CR>',opts)
 vim.keymap.set('n', '<C-k>', ':TmuxNavigateUp<CR>',opts)
-vim.keymap.set("i", "jk", "<ESC>", opts)
+vim.keymap.set('n', '<C-m>', ':FzfLua buffers<CR>', opts)
+vim.keymap.set('n', '<C-g>', ':FzfLua live_grep<CR>', opts)
+vim.keymap.set('n', '<leader>fs', ':FzfLua live_grep_resume<CR>', opts)
+vim.keymap.set('n', '<leader>fw', ':FzfLua grep_curbuf<CR>', opts)
+vim.keymap.set('n', '<leader>fq', ':FzfLua quickfix<CR>', opts)
+vim.keymap.set('n', '<leader>ff', ':FzfLua git_status<CR>', opts)
+vim.keymap.set('n', '<leader>fa', ':FzfLua lsp_code_actions<CR>', opts)
+vim.keymap.set('n', '<leader>os', ':ObsidianSearch<CR>',opts)
+vim.keymap.set('n', '<leader>on', ':ObsidianNew<CR>',opts)
+vim.keymap.set('n', '<leader>ow', ':ObsidianWorkspace<CR>',opts)
 vim.keymap.set("n", "<c-P>","<cmd>lua require('fzf-lua').files()<CR>", { silent = true })
+vim.keymap.set("i", "jk", "<ESC>", opts)
+vim.keymap.set("n", "ty", ":nohl<CR>", opts)
 vim.cmd.colorscheme('sonokai')
 vim.opt.clipboard = "unnamedplus"
 require('nvim-autopairs').setup()
