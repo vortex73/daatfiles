@@ -83,3 +83,4 @@ export LFS=/mnt/salazar
 alias ideas="bat ~/ideas.md"
 #zprof
 
+export PATH=$HOME/.local/bin:$PATH
