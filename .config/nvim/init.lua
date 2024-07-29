@@ -4,7 +4,6 @@ require "paq" {
     'sainnhe/sonokai',
     "FabijanZulj/blame.nvim",
     'christoomey/vim-tmux-navigator',
-    'ray-x/web-tools.nvim',
     'onsails/lspkind-nvim',
     'ibhagwan/fzf-lua',
     {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
