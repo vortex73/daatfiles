@@ -2,6 +2,7 @@ vim.loader.enable()
 require "paq" {
     "savq/paq-nvim",
     'sainnhe/sonokai',
+    'mfussenegger/nvim-jdtls',
     "FabijanZulj/blame.nvim",
     'christoomey/vim-tmux-navigator',
     'onsails/lspkind-nvim',
@@ -19,8 +20,8 @@ require "paq" {
     "rafamadriz/friendly-snippets",
     'L3MON4D3/LuaSnip',
     { "lervag/vimtex", opt = true },
-    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
     'fedepujol/move.nvim',
+    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
     'nvim-lua/plenary.nvim',
     'epwalsh/obsidian.nvim',
 }

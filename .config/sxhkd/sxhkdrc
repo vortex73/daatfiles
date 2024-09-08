@@ -20,7 +20,7 @@ XF86AudioLowerVolume
 XF86AudioRaiseVolume
 	amixer set Master 5%+ 
 XF86AudioMute
-  pactl set-sink-mute 0 toggle
+  amixer set Master toggle
 
 
 XF86MonBrightnessUp
@@ -29,14 +29,16 @@ XF86MonBrightnessDown
 	brightnessctl set 10%-
 # program launcher
 super + @space
-  rofi -theme ~/.config/rofi/themes/sed.rasi -show drun ssh filebrowser -display-combi RUN:
+  rofi -matching fuzzy -theme ~/.config/rofi/themes/sed.rasi -show drun ssh filebrowser -display-combi RUN:
 super + k
     splatmoji copy
 ctrl + shift + f 
   rofi -theme ~/.config/rofi/themes/sed.rasi -show window -display-combi WINDOW:
+ctrl + shift + h
+    grep -v '^#' ~/.config/sxhkd/sxhkdrc | grep -v '^$' | rofi -dmenu -i -p "Keybindings"
 # make sxhkd reload its configuration files:
 super + Escape
-	pkill -USR1 -x sxhkd
+	pkill -USR1 -x sxhkd 
 
 #
 # bspwm hotkeys

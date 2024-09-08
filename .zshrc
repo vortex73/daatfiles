@@ -72,6 +72,16 @@ alias ls="eza --icons"
 alias lo="eza -l --git-repos --icons"
 alias lt="eza --tree"
 alias lc="eza --git-ignore --tree --icons"
+alias seed="qemu-system-x86_64 \
+-m 2048 \
+-hda /home/vorrtt3x/vm/SEED-Ubuntu20.04.vdi \
+-boot c \
+-device virtio-net-pci,netdev=net00 \
+-netdev id=net00,type=user,hostfwd=tcp::6969-:22,hostfwd=tcp::9870-:9870,hostfwd=tcp::9864-:9864,hostfwd=tcp::8088-:8088, \
+-machine accel=kvm \
+-cpu host -smp 6 \
+-vga virtio
+"
 PROMPT='%B%F{130}%n%f [%F{82}%~%f]${vcs_info_msg_0_} %F{50}% %f '
 alias armsim="mono ~/Downloads/ARMSim.exe"
 source /home/vorrtt3x/cloned/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
