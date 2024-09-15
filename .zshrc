@@ -66,6 +66,7 @@ export PATH=$PATH:/usr/lib/xscreensaver
 export PATH=$PATH:/home/vorrtt3x/cloned/zls/zig-out/bin
 export PATH=$PATH:/home/vorrtt3x/dev/ludicrosity/zig-out/bin
 export NNN_BMS="d:$HOME/Documents;u:/home/vorrtt3x/Cam Uploads;D:$HOME/Downloads/"
+alias cast=" xrandr --output HDMI-1 --mode 1920x1080 --scale 1x1 --output eDP-1 --mode 2240x1400 --scale 0.857x0.771 --same-as HDMI-1"
 alias tasks="nvim ~/.tasks.md"
 alias la="eza -la --git-repos --icons"
 alias ls="eza --icons"
@@ -73,7 +74,7 @@ alias lo="eza -l --git-repos --icons"
 alias lt="eza --tree"
 alias lc="eza --git-ignore --tree --icons"
 alias seed="qemu-system-x86_64 \
--m 2048 \
+-m 4096 \
 -hda /home/vorrtt3x/vm/SEED-Ubuntu20.04.vdi \
 -boot c \
 -device virtio-net-pci,netdev=net00 \
