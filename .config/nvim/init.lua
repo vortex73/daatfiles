@@ -68,12 +68,10 @@ vim.keymap.set("n","<leader>tu",vim.cmd.UndotreeToggle)
 vim.keymap.set("n","<leader>pv",vim.cmd.Ex)
 vim.keymap.set('n', '<A-j>', ':MoveLine(1)<CR>', opts)
 vim.keymap.set('n', '<A-k>', ':MoveLine(-1)<CR>', opts)
-vim.keymap.set('n', '<A-f>', ':MoveWord(1)<CR>', opts)
-vim.keymap.set('n', '<A-b>', ':MoveWord(-1)<CR>', opts)
+vim.keymap.set('n', '<A-h>', ':MoveWord(1)<CR>', opts)
+vim.keymap.set('n', '<A-l>', ':MoveWord(-1)<CR>', opts)
 vim.keymap.set('v', '<A-j>', ':MoveBlock(1)<CR>', opts)
 vim.keymap.set('v', '<A-k>', ':MoveBlock(-1)<CR>', opts)
-vim.keymap.set('v', '<A-h>', ':MoveHBlock(-1)<CR>', opts)
-vim.keymap.set('v', '<A-l>', ':MoveHBlock(1)<CR>', opts)
 vim.keymap.set('n', '<C-h>', ':TmuxNavigateLeft<CR>',opts)
 vim.keymap.set('n', '<C-l>', ':TmuxNavigateRight<CR>',opts)
 vim.keymap.set('n', '<C-j>', ':TmuxNavigateDown<CR>',opts)
@@ -96,6 +94,7 @@ vim.cmd.colorscheme('sonokai')
 vim.opt.clipboard = "unnamedplus"
 require('nvim-autopairs').setup()
 require("ibl").setup()
+vim.cmd [[set cmdheight=0]]
 vim.opt.guicursor = "i:block" 
 vim.opt.nu = true
 vim.opt.relativenumber = true

@@ -15,7 +15,7 @@ alias space="dust"
 # The following lines were added by compinstall
 autoload -Uz vcs_info
 autoload -U colors && colors
-export PS1="%F{cyan}%n%f[\w] >>"
+# export PS1="%F{cyan}%n%f[\w] >>"
 autoload -Uz compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
@@ -57,7 +57,7 @@ n ()
 }
 trap nnn_cd EXIT
 unsetopt prompt_cr prompt_sp
-zstyle ':vcs_info:git:*' formats ' on %F{82}%b%f'
+zstyle ':vcs_info:git:*' formats ' on %F{148}%b%f'
 setopt PROMPT_SUBST
 export PATH=$PATH:/home/vorrtt3x/.cargo/bin
 export PATH=$PATH:/home/vorrtt3x/cloned/ziglang
@@ -65,6 +65,8 @@ export PATH=$PATH:/home/vorrtt3x/.nimble/bin
 export PATH=$PATH:/usr/lib/xscreensaver
 export PATH=$PATH:/home/vorrtt3x/cloned/zls/zig-out/bin
 export PATH=$PATH:/home/vorrtt3x/dev/ludicrosity/zig-out/bin
+export PATH=$PATH:/home/vorrtt3x/cloned/asciinema/target/release
+export PATH=$HOME/.local/bin:$PATH
 export NNN_BMS="d:$HOME/Documents;u:/home/vorrtt3x/Cam Uploads;D:$HOME/Downloads/"
 alias cast=" xrandr --output HDMI-1 --mode 1920x1080 --scale 1x1 --output eDP-1 --mode 2240x1400 --scale 0.857x0.771 --same-as HDMI-1"
 alias tasks="nvim ~/.tasks.md"
@@ -83,15 +85,12 @@ alias seed="qemu-system-x86_64 \
 -cpu host -smp 6 \
 -vga virtio
 "
-PROMPT='%B%F{130}%n%f [%F{82}%~%f]${vcs_info_msg_0_} %F{50}% %f '
-alias armsim="mono ~/Downloads/ARMSim.exe"
+PROMPT='[%F{148}%~%f]${vcs_info_msg_0_} %F{50}% ℵ%f '
+setopt interactivecomments
+
+# PROMPT="%F{70}%M%f"
 source /home/vorrtt3x/cloned/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-#DistroBuild
-export LFS=/mnt/salazar
-
-
+ZSH_HIGHLIGHT_STYLES[comment]='fg=white'
 alias ideas="bat ~/ideas.md"
 #zprof
-
-export PATH=$HOME/.local/bin:$PATH
