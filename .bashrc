@@ -19,6 +19,8 @@ HISTTIMEFORMAT="%F %T"
 export XSECURELOCK_PASSWORD_PROMPT=time_hex
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
+alias ll='ls -l'
+alias lla='ls -la'
 
 # User defined functions
 function bigboi(){

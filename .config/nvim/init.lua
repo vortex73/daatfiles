@@ -51,6 +51,10 @@ require 'nvim-treesitter.configs'.setup{
     highlight = {
         enable = true,
     },
+    playground = {
+        enable = true,
+        updatetime=25,
+    },
     incremental_selection = {
         enable = true,
         keymaps = {
@@ -95,6 +99,13 @@ vim.opt.clipboard = "unnamedplus"
 require('nvim-autopairs').setup()
 require("ibl").setup()
 vim.cmd [[set cmdheight=0]]
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = ""
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 1
+vim.lsp.inlay_hint.enable()
+vim.opt.foldcolumn = "0"
 vim.opt.guicursor = "i:block" 
 vim.opt.nu = true
 vim.opt.relativenumber = true
