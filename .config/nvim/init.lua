@@ -1,6 +1,7 @@
 vim.loader.enable()
 require "paq" {
     "savq/paq-nvim",
+    'MunifTanjim/prettier.nvim',
     'sainnhe/sonokai',
     'mfussenegger/nvim-jdtls',
     "FabijanZulj/blame.nvim",

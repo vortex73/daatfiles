@@ -25,6 +25,26 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 require("luasnip.loaders.from_vscode").lazy_load()
 local lua_opts = lsp_zero.nvim_lua_ls()
 
+local prettier = require("prettier")
+
+prettier.setup({
+  bin = 'prettier', -- or `'prettierd'` (v0.23.3+)
+  filetypes = {
+    "css",
+    "graphql",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "less",
+    "markdown",
+    "scss",
+    "typescript",
+    "typescriptreact",
+    "yaml",
+  },
+})
+
 -- configured servers
 
 require('lspconfig').clangd.setup {
