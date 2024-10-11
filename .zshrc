@@ -7,6 +7,10 @@ HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
 bindkey -v
+export KEYTIMEOUT=1
+bindkey "^H" backward-delete-char
+bindkey "^?" backward-delete-char
+bindkey -v '^K' up-line-or-history
 bindkey '^R' history-incremental-search-backward
 alias neofetch="fastfetch"
 alias sx="startx"
@@ -14,7 +18,7 @@ alias space="dust"
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 autoload -Uz vcs_info
-autoload -U colors && colors
+# autoload -U colors && colors
 # export PS1="%F{cyan}%n%f[\w] >>"
 autoload -Uz compinit
 zstyle ':completion:*' menu select
@@ -57,19 +61,21 @@ n ()
 }
 trap nnn_cd EXIT
 unsetopt prompt_cr prompt_sp
-zstyle ':vcs_info:git:*' formats ' on %F{148}%b%f'
+zstyle ':vcs_info:git:*' formats ' on %F{#87a987}%b%f'
 setopt PROMPT_SUBST
 export PATH=$PATH:/home/vorrtt3x/.cargo/bin
 export PATH=$PATH:/home/vorrtt3x/cloned/ziglang
 export PATH=$PATH:/home/vorrtt3x/.nimble/bin
 export PATH=$PATH:/usr/lib/xscreensaver
 export PATH=$PATH:/home/vorrtt3x/cloned/zls/zig-out/bin
+export PATH=$PATH:/home/vorrtt3x/Downloads/ns-allinone-3.42/ns-3.42/build/include
 export PATH=$PATH:/home/vorrtt3x/dev/ludicrosity/zig-out/bin
 export PATH=$PATH:/home/vorrtt3x/cloned/asciinema/target/release
 export PATH=$HOME/.local/bin:$PATH
 export NNN_BMS="d:$HOME/Documents;u:/home/vorrtt3x/Cam Uploads;D:$HOME/Downloads/"
 alias cast=" xrandr --output HDMI-1 --mode 1920x1080 --scale 1x1 --output eDP-1 --mode 2240x1400 --scale 0.857x0.771 --same-as HDMI-1"
 alias tasks="nvim ~/.tasks.md"
+alias grep="rg"
 alias la="eza -la --git-repos --icons"
 alias ls="eza --icons"
 alias lo="eza -l --git-repos --icons"
@@ -85,12 +91,12 @@ alias seed="qemu-system-x86_64 \
 -cpu host -smp 6 \
 -vga virtio
 "
-PROMPT='[%F{148}%~%f]${vcs_info_msg_0_} %F{50}% ℵ%f '
+PROMPT='[%F{#8a9a7b}%~%f]${vcs_info_msg_0_} %F{50}% ℵ%f '
 setopt interactivecomments
 
 # PROMPT="%F{70}%M%f"
 source /home/vorrtt3x/cloned/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ZSH_HIGHLIGHT_STYLES[comment]='fg=white'
-alias ideas="bat ~/ideas.md"
+alias ideas="bat ~/.ideas.md"
 #zprof
