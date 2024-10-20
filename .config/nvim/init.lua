@@ -1,6 +1,7 @@
 vim.loader.enable()
 require "paq" {
     "savq/paq-nvim",
+    "tris203/precognition.nvim",
     'MunifTanjim/prettier.nvim',
     'sainnhe/sonokai',
     'mfussenegger/nvim-jdtls',
@@ -95,6 +96,7 @@ vim.keymap.set("n", "<c-P>","<cmd>lua require('fzf-lua').files()<CR>", { silent 
 vim.keymap.set("i", "jk", "<ESC>", opts)
 vim.keymap.set("n", "ty", ":nohl<CR>", opts)
 vim.keymap.set('n', "gb", ":BlameToggle<CR>", opts)
+vim.keymap.set('n', "gi", ":Precognition toggle<CR>", opts)
 vim.cmd.colorscheme('sonokai')
 vim.opt.clipboard = "unnamedplus"
 require('nvim-autopairs').setup()
