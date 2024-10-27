@@ -1,8 +1,8 @@
 #zmodload zsh/zprof
 # Lines configured by zsh-newuser-install
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ -n "$DISPLAY" ]; then
-  exec tmux
-fi
+# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ -n "$DISPLAY" ]; then
+#   exec tmux
+# fi
 HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
@@ -76,8 +76,8 @@ export NNN_BMS="d:$HOME/Documents;u:/home/vorrtt3x/Cam Uploads;D:$HOME/Downloads
 alias cast=" xrandr --output HDMI-1 --mode 1920x1080 --scale 1x1 --output eDP-1 --mode 2240x1400 --scale 0.857x0.771 --same-as HDMI-1"
 alias tasks="nvim ~/.tasks.md"
 alias grep="rg"
-alias la="eza -la --git-repos --icons"
-alias ls="eza --icons"
+alias la="eza -la --git-repos --icons --hyperlink"
+alias ls="eza --icons --hyperlink"
 alias lo="eza -l --git-repos --icons"
 alias lt="eza --tree"
 alias lc="eza --git-ignore --tree --icons"
@@ -91,7 +91,7 @@ alias seed="qemu-system-x86_64 \
 -cpu host -smp 6 \
 -vga virtio
 "
-PROMPT='[%F{#8a9a7b}%~%f]${vcs_info_msg_0_} %F{50}% ℵ%f '
+PROMPT='[%F{#8a9a7b}% PES2UG22CS339_NARAYAN%f]${vcs_info_msg_0_} %F{50}% ℵ%f '
 setopt interactivecomments
 
 # PROMPT="%F{70}%M%f"
