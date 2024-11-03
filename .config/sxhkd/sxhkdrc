@@ -34,8 +34,6 @@ super + k
     splatmoji copy
 ctrl + shift + f 
   rofi -theme ~/.config/rofi/themes/sed.rasi -show window -display-combi WINDOW:
-ctrl + shift + h
-    grep -v '^#' ~/.config/sxhkd/sxhkdrc | grep -v '^$' | rofi -dmenu -i -p "Keybindings"
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd 

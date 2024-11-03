@@ -28,6 +28,12 @@ compinit
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 plugins=(git shh-agent)
+if test -n "$KITTY_INSTALLATION_DIR"; then
+    export KITTY_SHELL_INTEGRATION="enabled"
+    autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+    kitty-integration
+    unfunction kitty-integration
+fi
 
 n ()
 {
@@ -74,6 +80,7 @@ export PATH=$PATH:/home/vorrtt3x/cloned/asciinema/target/release
 export PATH=$HOME/.local/bin:$PATH
 export NNN_BMS="d:$HOME/Documents;u:/home/vorrtt3x/Cam Uploads;D:$HOME/Downloads/"
 alias cast=" xrandr --output HDMI-1 --mode 1920x1080 --scale 1x1 --output eDP-1 --mode 2240x1400 --scale 0.857x0.771 --same-as HDMI-1"
+alias icat="kitty +kitten icat --align=left"
 alias tasks="nvim ~/.tasks.md"
 alias grep="rg"
 alias la="eza -la --git-repos --icons --hyperlink"
@@ -91,7 +98,7 @@ alias seed="qemu-system-x86_64 \
 -cpu host -smp 6 \
 -vga virtio
 "
-PROMPT='[%F{#8a9a7b}% PES2UG22CS339_NARAYAN%f]${vcs_info_msg_0_} %F{50}% ℵ%f '
+PROMPT='[%F{#8a9a7b}%~%f]${vcs_info_msg_0_} %F{50}% ℵ%f '
 setopt interactivecomments
 
 # PROMPT="%F{70}%M%f"

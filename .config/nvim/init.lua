@@ -1,6 +1,8 @@
 vim.loader.enable()
 require "paq" {
     "savq/paq-nvim",
+    'mikesmithgh/kitty-scrollback.nvim',
+    'knubie/vim-kitty-navigator',
     "tris203/precognition.nvim",
     'MunifTanjim/prettier.nvim',
     'sainnhe/sonokai',
@@ -45,7 +47,7 @@ require('move').setup({
 		enable = false -- Enables char movement
 	}
 })
-
+require('kitty-scrollback').setup()
 require 'nvim-treesitter.configs'.setup{
     ensure_installed = {"c","cpp","lua","python","markdown","zig","nim","html","css"},
     sync_install = false,
@@ -97,6 +99,10 @@ vim.keymap.set("i", "jk", "<ESC>", opts)
 vim.keymap.set("n", "ty", ":nohl<CR>", opts)
 vim.keymap.set('n', "gb", ":BlameToggle<CR>", opts)
 vim.keymap.set('n', "gi", ":Precognition toggle<CR>", opts)
+vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'none' })
 vim.cmd.colorscheme('sonokai')
 vim.opt.clipboard = "unnamedplus"
 require('nvim-autopairs').setup()

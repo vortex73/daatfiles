@@ -6,10 +6,10 @@
 #: individual font faces and even specify special fonts for particular
 #: characters.
 
- font_family       Source Code Pro
+ font_family       VictorMono NFM
  bold_font         auto
- italic_font       auto
- bold_italic_font  auto
+ italic_font       VictorMono Light
+ bold_italic_font  VictorMono Bold
 
 #: You can specify different fonts for the bold/italic/bold-italic
 #: variants. To get a full list of supported fonts use the `kitty
@@ -231,6 +231,8 @@ disable_ligatures never
 #: Cursor customization {{{
 
 # cursor #cccccc
+#
+enable_cursor_trail yes
 
 #: Default cursor color. If set to the special value none the cursor
 #: will be rendered with a "reverse video" effect. It's color will be
@@ -281,7 +283,7 @@ shell-integration no-cursor
 
 #: Scrollback {{{
 
-# scrollback_lines 2000
+scrollback_lines 2000
 
 #: Number of lines of history to keep in memory for scrolling back.
 #: Memory is allocated on demand. Negative numbers are (effectively)
@@ -737,7 +739,7 @@ enable_audio_bell no
 #: suffix of "c" on the width/height values to have them interpreted
 #: as number of cells instead of pixels.
 
-# enabled_layouts *
+enabled_layouts grid,stack
 
 #: The enabled window layouts. A comma separated list of layout names.
 #: The special value all means all layouts. The first listed layout
@@ -877,7 +879,7 @@ hide_window_decorations yes
 #: insensitive, from the set [0-9A-Z]. Specify your preference as a
 #: string of characters.
 
-confirm_os_window_close 0
+confirm_os_window_close 1
 
 #: Ask for confirmation when closing an OS window or a tab with at
 #: least this number of kitty windows in it by window manager (e.g.
@@ -911,7 +913,7 @@ tab_bar_edge bottom
 #: The second number is the margin between the tab bar and the
 #: contents of the current tab.
 
-# tab_bar_style fade
+tab_bar_style powerline
 
 #: The tab bar style, can be one of:
 
@@ -969,13 +971,13 @@ tab_bar_edge bottom
 #: The separator between tabs in the tab bar when using separator as
 #: the tab_bar_style.
 
-# tab_powerline_style angled
+# tab_powerline_style round
 
 #: The powerline separator style between tabs in the tab bar when
 #: using powerline as the tab_bar_style, can be one of: angled,
 #: slanted, round.
 
-# tab_activity_symbol none
+tab_activity_symbol " " 
 
 #: Some text or a Unicode symbol to show on the tab if a window in the
 #: tab that does not have focus has some activity. If you want to use
@@ -987,7 +989,7 @@ tab_bar_edge bottom
 #: The maximum number of cells that can be used to render the text in
 #: a tab. A value of zero means that no limit is applied.
 
-# tab_title_template "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{title}"
+# tab_title_template "{fmt.fg.green}{bell_symbol}{activity_symbol}{fmt.fg.tab}{title}"
 
 #: A template to render the tab title. The default just renders the
 #: title with optional symbols for bell and activity. If you wish to
@@ -1424,7 +1426,7 @@ listen_on unix:@kitty
 #: special value of ask means that kitty will ask before opening the
 #: link when clicked.
 
-# shell_integration enabled
+shell_integration enabled
 
 #: Enable shell integration on supported shells. This enables features
 #: such as jumping to previous prompts, browsing the output of the
@@ -2047,6 +2049,11 @@ listen_on unix:@kitty
 
 #:     map ctrl+alt+t goto_layout tall
 #:     map ctrl+alt+s goto_layout stack
+map kitty_mod+z toggle_layout stack
+map ctrl+j kitten pass_keys.py bottom ctrl+j
+map ctrl+k kitten pass_keys.py top    ctrl+k
+map ctrl+h kitten pass_keys.py left   ctrl+h
+map ctrl+l kitten pass_keys.py right  ctrl+l
 
 #: Similarly, to switch back to the previous layout::
 
@@ -2338,10 +2345,19 @@ listen_on unix:@kitty
 
 #: }}}
 
+# kitty-scrollback.nvim Kitten alias
+action_alias kitty_scrollback_nvim kitten /home/vorrtt3x/.local/share/nvim/site/pack/paqs/start/kitty-scrollback.nvim/python/kitty_scrollback_nvim.py
+
+# Browse scrollback buffer in nvim
+map kitty_mod+h kitty_scrollback_nvim --nvim-args +TransparentEnable
+# Browse output of the last shell command in nvim
+map kitty_mod+g kitty_scrollback_nvim --nvim-args +TransparentEnable --config ksb_builtin_last_cmd_output
+# Show clicked command output in nvim
+mouse_map ctrl+shift+right press ungrabbed combine : mouse_select_command_output : kitty_scrollback_nvim --nvim-args +TransparentEnable --config ksb_builtin_last_visited_cmd_output
 #: }}}
 
 
 # BEGIN_KITTY_THEME
-# Tokyo Night
+# Flexoki (Dark)
 include current-theme.conf
 # END_KITTY_THEME

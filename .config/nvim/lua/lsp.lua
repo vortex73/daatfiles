@@ -59,10 +59,10 @@ require('lspconfig').tailwindcss.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
-require('lspconfig').tsserver.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
+-- require('lspconfig').tsserver.setup {
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+-- }
 require('lspconfig').html.setup {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -79,7 +79,7 @@ require('lspconfig').nimls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
-require('lspconfig').tsserver.setup{
+require('lspconfig').ts_ls.setup{
     on_attach = on_attach,
     settings = {
         completions = {
