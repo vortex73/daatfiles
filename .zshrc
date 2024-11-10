@@ -106,4 +106,6 @@ source /home/vorrtt3x/cloned/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ZSH_HIGHLIGHT_STYLES[comment]='fg=white'
 alias ideas="bat ~/.ideas.md"
+alias s="kitten ssh"
+alias broadcast="kitty +kitten broadcast -t state:active"
 #zprof

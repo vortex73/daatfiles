@@ -21,7 +21,7 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias ll='ls -l'
 alias lla='ls -la'
-
+alias cls='clear'
 # User defined functions
 function bigboi(){
 	du -h -x -s -- * | sort -r -h | head -20;
