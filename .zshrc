@@ -108,4 +108,6 @@ ZSH_HIGHLIGHT_STYLES[comment]='fg=white'
 alias ideas="bat ~/.ideas.md"
 alias s="kitten ssh"
 alias broadcast="kitty +kitten broadcast -t state:active"
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
 #zprof
