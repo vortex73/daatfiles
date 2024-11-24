@@ -131,7 +131,10 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.updatetime = 0
 vim.opt.conceallevel = 1
+vim.opt.listchars = { tab = "».", trail = "~", extends= "→" ,precedes= "←",nbsp= "+" }
+vim.opt.list = true
+vim.api.nvim_set_hl(0, 'Tab', { fg = '#D3D3D3' })
 vim.cmd('set tabstop=4')
 vim.cmd('set shiftwidth=4')
-vim.cmd('set expandtab')
+-- vim.cmd('set expandtab')
 vim.opt.laststatus = 0
