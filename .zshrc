@@ -5,6 +5,7 @@
 # fi
 HISTFILE=~/.histfile
 HISTSIZE=10000
+HISTFILESIZE=10000
 SAVEHIST=10000
 bindkey -v
 export KEYTIMEOUT=1
@@ -65,6 +66,17 @@ n ()
         rm -f "$NNN_TMPFILE" > /dev/null
     }
 }
+
+bindkey '^R' fzf-history-search
+
+fzf-history-search() {
+    BUFFER=$(history | fzf --tac | sed 's/ *[0-9]* *//')
+    CURSOR=${#BUFFER}
+    zle reset-prompt
+}
+zle -N fzf-history-search
+
+
 trap nnn_cd EXIT
 unsetopt prompt_cr prompt_sp
 zstyle ':vcs_info:git:*' formats ' on %F{#87a987}%b%f'
@@ -98,7 +110,8 @@ alias seed="qemu-system-x86_64 \
 -cpu host -smp 6 \
 -vga virtio
 "
-PROMPT='[%F{#8a9a7b}%~%f]${vcs_info_msg_0_} %F{50}% ℵ%f '
+# PROMPT=' %F{#8ba4b0}%~%f${vcs_info_msg_0_} %F{50}% ℵ%f '
+PROMPT=' %F{#8ba4b0}$(if [[ $PWD == $HOME ]]; then echo "varchx"; else echo "${PWD/#$HOME/~}"; fi)%f${vcs_info_msg_0_} %F{50}% ℵ%f '
 setopt interactivecomments
 
 # PROMPT="%F{70}%M%f"
@@ -110,4 +123,5 @@ alias s="kitten ssh"
 alias broadcast="kitty +kitten broadcast -t state:active"
 export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
+alias history="history 1"
 #zprof

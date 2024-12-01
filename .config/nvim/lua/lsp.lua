@@ -51,6 +51,10 @@ require('lspconfig').clangd.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+require('lspconfig').millet.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
 require('lspconfig').emmet_language_server.setup {
     on_attach = on_attach,
     capabilities = capabilities,

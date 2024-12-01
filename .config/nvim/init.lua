@@ -32,6 +32,64 @@ require "paq" {
 }
 require 'lsp'
 require('blame').setup()
+-- Java Brainrot
+local jdtls = require('jdtls')
+
+local function find_root()
+    local root_markers = {'gradlew', '.git', 'mvnw', 'pom.xml', 'build.gradle'}
+    local found_root = vim.fs.find(root_markers, { upward = true })[1]
+    if found_root then
+        return vim.fs.dirname(found_root)
+    else
+        return vim.fn.getcwd()
+    end
+end
+
+local function setup_jdtls()
+    if vim.bo.buftype ~= '' then
+        print("Cannot setup jdtls: No valid buffer")
+        return
+    end
+
+    local root_dir = find_root()
+    if not root_dir or root_dir == "" then
+        print("Could not determine project root directory")
+        return
+    end
+
+    if vim.bo.filetype ~= 'java' then
+        print("Not a Java file, skipping jdtls setup")
+        return
+    end
+
+    local config = {
+        cmd = {'jdtls'},
+        root_dir = root_dir,
+        settings = {
+            java = {
+                contentProvider = { preferred = 'fernflower' },
+            },
+        },
+        on_attach = function(client, bufnr)
+            vim.api.nvim_create_autocmd("BufEnter", {
+                pattern = "*.java",
+                callback = function()
+                    jdtls.start_or_attach(config)
+                end
+            })
+        end
+    }
+
+    local ok, err = pcall(jdtls.start_or_attach, config)
+    if not ok then
+        print("Error starting jdtls: " .. tostring(err))
+    end
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "java",
+    callback = setup_jdtls
+})
 require('move').setup({
 	line = {
 		enable = true, -- Enables line movement
