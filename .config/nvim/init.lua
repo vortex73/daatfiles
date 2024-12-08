@@ -192,6 +192,10 @@ vim.opt.conceallevel = 1
 vim.opt.listchars = { tab = "».", trail = "~", extends= "→" ,precedes= "←",nbsp= "+" }
 vim.opt.list = true
 vim.api.nvim_set_hl(0, 'Tab', { fg = '#D3D3D3' })
+-- Mapping for ;; (search and replace with no prompt)
+vim.api.nvim_set_keymap('n', ';;', ':%s:::g<Left><Left><Left>', { noremap = true, silent = false })
+-- Mapping for ;' (search and replace with confirmation)
+vim.api.nvim_set_keymap('n', ";'", ":%s:::cg<Left><Left><Left><Left>", { noremap = true, silent = false })
 vim.cmd('set tabstop=4')
 vim.cmd('set shiftwidth=4')
 -- vim.cmd('set expandtab')
