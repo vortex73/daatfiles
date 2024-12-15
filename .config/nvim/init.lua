@@ -167,11 +167,6 @@ vim.opt.clipboard = "unnamedplus"
 require('nvim-autopairs').setup()
 require("ibl").setup()
 vim.cmd [[set cmdheight=0]]
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldtext = ""
-vim.opt.foldlevel = 99
-vim.opt.foldlevelstart = 1
 vim.lsp.inlay_hint.enable()
 vim.opt.foldcolumn = "0"
 vim.opt.guicursor = "i:block" 
@@ -200,3 +195,26 @@ vim.cmd('set tabstop=4')
 vim.cmd('set shiftwidth=4')
 -- vim.cmd('set expandtab')
 vim.opt.laststatus = 0
+
+vim.o.tabline = '%!v:lua.MyTabLine()'
+
+function _G.MyTabLine()
+  local tabline = ''
+  local tabcount = vim.fn.tabpagenr('$')
+  local current_tab = vim.fn.tabpagenr()
+
+  for i = 1, tabcount do
+    local tab_name = vim.fn.gettabvar(i, 'tabname', '[No Name]')
+    if i == current_tab then
+      tabline = tabline .. '%#TabLineSel# ' .. i .. ': ' .. tab_name .. ' '
+    else
+      tabline = tabline .. '%#TabLine# ' .. i .. ': ' .. tab_name .. ' '
+    end
+  end
+
+  return tabline
+end
+
+vim.api.nvim_set_hl(0, 'TabLine', {bg='#2e2e2e', fg='#dcdccc'})
+vim.api.nvim_set_hl(0, 'TabLineSel', {bg='#5f5f5f', fg='#ffffff'})
+

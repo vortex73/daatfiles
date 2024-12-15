@@ -1,6 +1,9 @@
 /** Basic config file **/
 
 configuration {
+  filebrowser {
+	  directory: "~";
+  }
   show-icons:         true;
   icon-theme:         "FiraCode";
 }
