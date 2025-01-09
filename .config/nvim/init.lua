@@ -2,6 +2,7 @@ vim.loader.enable()
 require "paq" {
     "savq/paq-nvim",
     'mikesmithgh/kitty-scrollback.nvim',
+	'echasnovski/mini.surround',
     'hat0uma/csvview.nvim',
     'knubie/vim-kitty-navigator',
     "tris203/precognition.nvim",
@@ -32,6 +33,7 @@ require "paq" {
 }
 require 'lsp'
 require('blame').setup()
+require('mini.surround').setup()
 -- Java Brainrot
 local jdtls = require('jdtls')
 

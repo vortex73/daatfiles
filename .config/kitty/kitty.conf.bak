@@ -754,7 +754,7 @@ enabled_layouts grid,stack
 #: start_resizing_window. The cells value is used for horizontal
 #: resizing, and the lines value is used for vertical resizing.
 
-# window_border_width 0.5pt
+window_border_width 0.2pt
 
 #: The width of window borders. Can be either in pixels (px) or pts
 #: (pt). Values in pts will be rounded to the nearest number of pixels
@@ -799,8 +799,7 @@ window_padding_width 4
 #: this option. Using a value of center means the cell area will be
 #: placed centrally. A value of top-left means the padding will be
 #: only at the bottom and right edges.
-
-# active_border_color #00ff00
+# active_border_color #000
 
 #: The color for the border of the active window. Set this to none to
 #: not draw borders around the active window.
@@ -814,7 +813,7 @@ window_padding_width 4
 #: The color for the border of inactive windows in which a bell has
 #: occurred.
 
-inactive_text_alpha 1.0
+inactive_text_alpha 0.5
 
 #: Fade the text in inactive windows by the specified amount (a number
 #: between zero and one, with zero being fully faded).
@@ -912,7 +911,8 @@ tab_bar_edge bottom
 #: The second number is the margin between the tab bar and the
 #: contents of the current tab.
 
-tab_bar_style powerline
+tab_bar_style       powerline
+tab_powerline_style slanted
 
 #: The tab bar style, can be one of:
 
@@ -1065,7 +1065,7 @@ tab_activity_symbol " "
 
 #: The foreground and background colors.
 
-background_opacity .99
+background_opacity 1
 
 #: The opacity of the background. A number between zero and one, where
 #: one is opaque and zero is fully transparent. This will only work if
@@ -2360,14 +2360,14 @@ mouse_map ctrl+shift+right press ungrabbed combine : mouse_select_command_output
 
 
 # BEGIN_KITTY_THEME
-# Kanagawa_dragon
+# Kanagawa
 include current-theme.conf
 # END_KITTY_THEME
 
 
 
 # BEGIN_KITTY_FONTS
-font_family      family="IosevkaTerm Nerd Font Mono"
+font_family      family="SauceCodePro Nerd Font Mono"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto

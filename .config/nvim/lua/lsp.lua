@@ -165,10 +165,6 @@ require('lspconfig').tailwindcss.setup {
 				name = "musings",
 				path = "~/dev/writeups/",
 			},
-			{
-				name = "pesnotes",
-				path = "~/pes/notes/",
-			},
 		},
 
 	})
