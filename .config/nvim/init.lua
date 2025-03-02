@@ -1,35 +1,36 @@
 vim.loader.enable()
 require "paq" {
-    "savq/paq-nvim",
-    'mikesmithgh/kitty-scrollback.nvim',
+	"savq/paq-nvim",
+	"nvim-treesitter/nvim-treesitter-context",
+	'mikesmithgh/kitty-scrollback.nvim',
 	'echasnovski/mini.surround',
-    'hat0uma/csvview.nvim',
-    'knubie/vim-kitty-navigator',
-    "tris203/precognition.nvim",
-    'MunifTanjim/prettier.nvim',
-    'sainnhe/sonokai',
-    'mfussenegger/nvim-jdtls',
-    "FabijanZulj/blame.nvim",
-    -- 'christoomey/vim-tmux-navigator',
-    'onsails/lspkind-nvim',
-    'ibhagwan/fzf-lua',
-    {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
-    'hrsh7th/cmp-nvim-lsp',
-    'windwp/nvim-autopairs',
-    'hrsh7th/cmp-path',
-    "lukas-reineke/indent-blankline.nvim",
-    "neovim/nvim-lspconfig",
-    "xiyaowong/transparent.nvim",
-    'hrsh7th/nvim-cmp',
-    "mbbill/undotree",
-    'saadparwaiz1/cmp_luasnip',
-    "rafamadriz/friendly-snippets",
-    'L3MON4D3/LuaSnip',
-    { "lervag/vimtex", opt = true },
-    'fedepujol/move.nvim',
-    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-    'nvim-lua/plenary.nvim',
-    'epwalsh/obsidian.nvim',
+	'hat0uma/csvview.nvim',
+	'knubie/vim-kitty-navigator',
+	"tris203/precognition.nvim",
+	'MunifTanjim/prettier.nvim',
+	'sainnhe/sonokai',
+	'mfussenegger/nvim-jdtls',
+	"FabijanZulj/blame.nvim",
+	-- 'christoomey/vim-tmux-navigator',
+	'onsails/lspkind-nvim',
+	'ibhagwan/fzf-lua',
+	{'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
+	'hrsh7th/cmp-nvim-lsp',
+	'windwp/nvim-autopairs',
+	'hrsh7th/cmp-path',
+	"lukas-reineke/indent-blankline.nvim",
+	"neovim/nvim-lspconfig",
+	"xiyaowong/transparent.nvim",
+	'hrsh7th/nvim-cmp',
+	"mbbill/undotree",
+	'saadparwaiz1/cmp_luasnip',
+	"rafamadriz/friendly-snippets",
+	'L3MON4D3/LuaSnip',
+	{ "lervag/vimtex", opt = true },
+	'fedepujol/move.nvim',
+	{ 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+	'nvim-lua/plenary.nvim',
+	'epwalsh/obsidian.nvim',
 }
 require 'lsp'
 require('blame').setup()
@@ -38,59 +39,59 @@ require('mini.surround').setup()
 local jdtls = require('jdtls')
 
 local function find_root()
-    local root_markers = {'gradlew', '.git', 'mvnw', 'pom.xml', 'build.gradle'}
-    local found_root = vim.fs.find(root_markers, { upward = true })[1]
-    if found_root then
-        return vim.fs.dirname(found_root)
-    else
-        return vim.fn.getcwd()
-    end
+	local root_markers = {'gradlew', '.git', 'mvnw', 'pom.xml', 'build.gradle'}
+	local found_root = vim.fs.find(root_markers, { upward = true })[1]
+	if found_root then
+		return vim.fs.dirname(found_root)
+	else
+		return vim.fn.getcwd()
+	end
 end
 
 local function setup_jdtls()
-    if vim.bo.buftype ~= '' then
-        print("Cannot setup jdtls: No valid buffer")
-        return
-    end
+	if vim.bo.buftype ~= '' then
+		print("Cannot setup jdtls: No valid buffer")
+		return
+	end
 
-    local root_dir = find_root()
-    if not root_dir or root_dir == "" then
-        print("Could not determine project root directory")
-        return
-    end
+	local root_dir = find_root()
+	if not root_dir or root_dir == "" then
+		print("Could not determine project root directory")
+		return
+	end
 
-    if vim.bo.filetype ~= 'java' then
-        print("Not a Java file, skipping jdtls setup")
-        return
-    end
+	if vim.bo.filetype ~= 'java' then
+		print("Not a Java file, skipping jdtls setup")
+		return
+	end
 
-    local config = {
-        cmd = {'jdtls'},
-        root_dir = root_dir,
-        settings = {
-            java = {
-                contentProvider = { preferred = 'fernflower' },
-            },
-        },
-        on_attach = function(client, bufnr)
-            vim.api.nvim_create_autocmd("BufEnter", {
-                pattern = "*.java",
-                callback = function()
-                    jdtls.start_or_attach(config)
-                end
-            })
-        end
-    }
+	local config = {
+		cmd = {'jdtls'},
+		root_dir = root_dir,
+		settings = {
+			java = {
+				contentProvider = { preferred = 'fernflower' },
+			},
+		},
+		on_attach = function(client, bufnr)
+			vim.api.nvim_create_autocmd("BufEnter", {
+				pattern = "*.java",
+				callback = function()
+					jdtls.start_or_attach(config)
+				end
+			})
+		end
+	}
 
-    local ok, err = pcall(jdtls.start_or_attach, config)
-    if not ok then
-        print("Error starting jdtls: " .. tostring(err))
-    end
+	local ok, err = pcall(jdtls.start_or_attach, config)
+	if not ok then
+		print("Error starting jdtls: " .. tostring(err))
+	end
 end
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "java",
-    callback = setup_jdtls
+	pattern = "java",
+	callback = setup_jdtls
 })
 require('move').setup({
 	line = {
@@ -110,25 +111,25 @@ require('move').setup({
 })
 require('kitty-scrollback').setup()
 require 'nvim-treesitter.configs'.setup{
-    ensure_installed = {"c","cpp","lua","python","markdown","zig","nim","html","css"},
-    sync_install = false,
-    auto_install = true,
-    highlight = {
-        enable = true,
-    },
-    playground = {
-        enable = true,
-        updatetime=25,
-    },
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = '<CR>',
-            scope_incremental = '<CR>',
-            node_incremental = '<TAB>',
-            node_decremental = '<S-TAB>',
-        },
-    },
+	ensure_installed = {"c","cpp","lua","python","markdown","zig","nim","html","css"},
+	sync_install = false,
+	auto_install = true,
+	highlight = {
+		enable = true,
+	},
+	playground = {
+		enable = true,
+		updatetime=25,
+	},
+	incremental_selection = {
+		enable = true,
+		keymaps = {
+			init_selection = '<CR>',
+			scope_incremental = '<CR>',
+			node_incremental = '<TAB>',
+			node_decremental = '<S-TAB>',
+		},
+	},
 }
 
 -- My Keybindings
@@ -201,20 +202,20 @@ vim.opt.laststatus = 0
 vim.o.tabline = '%!v:lua.MyTabLine()'
 
 function _G.MyTabLine()
-  local tabline = ''
-  local tabcount = vim.fn.tabpagenr('$')
-  local current_tab = vim.fn.tabpagenr()
+	local tabline = ''
+	local tabcount = vim.fn.tabpagenr('$')
+	local current_tab = vim.fn.tabpagenr()
 
-  for i = 1, tabcount do
-    local tab_name = vim.fn.gettabvar(i, 'tabname', '[No Name]')
-    if i == current_tab then
-      tabline = tabline .. '%#TabLineSel# ' .. i .. ': ' .. tab_name .. ' '
-    else
-      tabline = tabline .. '%#TabLine# ' .. i .. ': ' .. tab_name .. ' '
-    end
-  end
+	for i = 1, tabcount do
+		local tab_name = vim.fn.gettabvar(i, 'tabname', '[No Name]')
+		if i == current_tab then
+			tabline = tabline .. '%#TabLineSel# ' .. i .. ': ' .. tab_name .. ' '
+		else
+			tabline = tabline .. '%#TabLine# ' .. i .. ': ' .. tab_name .. ' '
+		end
+	end
 
-  return tabline
+	return tabline
 end
 
 vim.api.nvim_set_hl(0, 'TabLine', {bg='#2e2e2e', fg='#dcdccc'})
