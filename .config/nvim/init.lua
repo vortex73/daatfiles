@@ -196,6 +196,7 @@ vim.api.nvim_set_keymap('n', ';;', ':%s:::g<Left><Left><Left>', { noremap = true
 vim.api.nvim_set_keymap('n', ";'", ":%s:::cg<Left><Left><Left><Left>", { noremap = true, silent = false })
 vim.cmd('set tabstop=4')
 vim.cmd('set shiftwidth=4')
+vim.cmd('set inccommand=split')
 -- vim.cmd('set expandtab')
 vim.opt.laststatus = 0
 
