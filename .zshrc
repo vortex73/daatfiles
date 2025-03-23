@@ -1,4 +1,4 @@
-#zmodload zsh/zprof
+# zmodload zsh/zprof
 # Lines configured by zsh-newuser-install
 # if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ -n "$DISPLAY" ]; then
 #   exec tmux
@@ -25,7 +25,7 @@ autoload -Uz compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 precmd() { vcs_info }
-compinit
+compinit -C
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 plugins=(git shh-agent)
@@ -118,10 +118,9 @@ setopt interactivecomments
 source /home/vorrtt3x/cloned/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ZSH_HIGHLIGHT_STYLES[comment]='fg=white'
-alias ideas="bat ~/.ideas.md"
 alias s="kitten ssh"
 alias broadcast="kitty +kitten broadcast -t state:active"
 export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
 alias history="history 1"
-#zprof
+# zprof

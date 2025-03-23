@@ -32,6 +32,8 @@ require "paq" {
 	'nvim-lua/plenary.nvim',
 	'epwalsh/obsidian.nvim',
 }
+
+
 require 'lsp'
 require('blame').setup()
 require('mini.surround').setup()
@@ -198,27 +200,51 @@ vim.cmd('set tabstop=4')
 vim.cmd('set shiftwidth=4')
 vim.cmd('set inccommand=split')
 -- vim.cmd('set expandtab')
-vim.opt.laststatus = 0
+-- vim.opt.laststatus = 0
 
 vim.o.tabline = '%!v:lua.MyTabLine()'
 
-function _G.MyTabLine()
-	local tabline = ''
-	local tabcount = vim.fn.tabpagenr('$')
-	local current_tab = vim.fn.tabpagenr()
+local cmp = require('cmp')
+cmp.setup({
+	mapping = {
+		-- This makes Tab insert a tab character when no completion menu is visible
+		['<Tab>'] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			else
+				fallback()
+			end
+		end, { 'i', 's' }),
 
-	for i = 1, tabcount do
-		local tab_name = vim.fn.gettabvar(i, 'tabname', '[No Name]')
-		if i == current_tab then
-			tabline = tabline .. '%#TabLineSel# ' .. i .. ': ' .. tab_name .. ' '
-		else
-			tabline = tabline .. '%#TabLine# ' .. i .. ': ' .. tab_name .. ' '
-		end
-	end
+		['<S-Tab>'] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			else
+				fallback()
+			end
+		end, { 'i', 's' }),
 
-	return tabline
-end
+		['<CR>'] = cmp.mapping.confirm({ select = true }),
+	},
+})
 
-vim.api.nvim_set_hl(0, 'TabLine', {bg='#2e2e2e', fg='#dcdccc'})
-vim.api.nvim_set_hl(0, 'TabLineSel', {bg='#5f5f5f', fg='#ffffff'})
+-- function _G.MyTabLine()
+-- 	local tabline = ''
+-- 	local tabcount = vim.fn.tabpagenr('$')
+-- 	local current_tab = vim.fn.tabpagenr()
+--
+-- 	for i = 1, tabcount do
+-- 		local tab_name = vim.fn.gettabvar(i, 'tabname', '[No Name]')
+-- 		if i == current_tab then
+-- 			tabline = tabline .. '%#TabLineSel# ' .. i .. ': ' .. tab_name .. ' '
+-- 		else
+-- 			tabline = tabline .. '%#TabLine# ' .. i .. ': ' .. tab_name .. ' '
+-- 		end
+-- 	end
+--
+-- 	return tabline
+-- end
+--
+-- vim.api.nvim_set_hl(0, 'TabLine', {bg='#2e2e2e', fg='#dcdccc'})
+-- vim.api.nvim_set_hl(0, 'TabLineSel', {bg='#5f5f5f', fg='#ffffff'})
 
