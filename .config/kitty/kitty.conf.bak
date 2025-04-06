@@ -249,7 +249,7 @@ enable_cursor_trail yes
 #: then this option is ignored.
 
 cursor_shape block
-shell-integration no-cursor
+# shell-integration no-cursor
 #: The cursor shape can be one of block, beam, underline. Note that
 #: when reloading the config this will be changed only if the cursor
 #: shape has not been set by the program running in the terminal. This
@@ -649,7 +649,7 @@ scrollback_pager_history_size 20000
 #: refresh rate. Also, to minimize latency when there is pending input
 #: to be processed, this option is ignored.
 
-# input_delay 3
+input_delay 1
 
 #: Delay before input from the program running in the terminal is
 #: processed (in milliseconds). Note that decreasing it will increase
@@ -738,8 +738,7 @@ enable_audio_bell no
 #: suffix of "c" on the width/height values to have them interpreted
 #: as number of cells instead of pixels.
 
-enabled_layouts grid,stack
-
+enabled_layouts splits:split_axis=horizontal, stack
 #: The enabled window layouts. A comma separated list of layout names.
 #: The special value all means all layouts. The first listed layout
 #: will be used as the startup layout. Default configuration is all
@@ -983,7 +982,7 @@ tab_activity_symbol " "
 #: leading or trailing spaces, surround the text with quotes. See
 #: tab_title_template for how this is rendered.
 
-# tab_title_max_length 0
+tab_title_max_length 10
 
 #: The maximum number of cells that can be used to render the text in
 #: a tab. A value of zero means that no limit is applied.
@@ -2347,27 +2346,43 @@ map ctrl+l kitten pass_keys.py right  ctrl+l "^.* - nvim$"
 
 #: }}}
 
-# kitty-scrollback.nvim Kitten alias
-action_alias kitty_scrollback_nvim kitten /home/vorrtt3x/.local/share/nvim/site/pack/paqs/start/kitty-scrollback.nvim/python/kitty_scrollback_nvim.py
 
-# Browse scrollback buffer in nvim
-map kitty_mod+h kitty_scrollback_nvim --nvim-args +TransparentEnable
-# Browse output of the last shell command in nvim
-map kitty_mod+g kitty_scrollback_nvim --nvim-args +TransparentEnable --config ksb_builtin_last_cmd_output
-# Show clicked command output in nvim
-mouse_map ctrl+shift+right press ungrabbed combine : mouse_select_command_output : kitty_scrollback_nvim --nvim-args +TransparentEnable --config ksb_builtin_last_visited_cmd_output
+# Create a new window splitting the space used by the existing one so that
+# the two windows are placed one above the other
+map ctrl+shift+i launch --location=hsplit --cwd=current
+
+# Create a new window splitting the space used by the existing one so that
+# the two windows are placed side by side
+map ctrl+shift+b launch --location=vsplit --cwd=current
+
+# Create a new window splitting the space used by the existing one so that
+# the two windows are placed side by side if the existing window is wide or
+# one above the other if the existing window is tall.
+map ctrl+shift+n launch --location=split --cwd=current
+
+# Rotate the current split, changing its split axis from vertical to
+# horizontal or vice versa
+map ctrl+shift+r layout_action rotate
+
+# Move the active window in the indicated direction
+map ctrl+shift+k move_window up
+map ctrl+shift+h move_window left
+map ctrl+shift+l move_window right
+map ctrl+shift+j move_window down
+
 #: }}}
 
+remote_kitty yes
 
 # BEGIN_KITTY_THEME
-# Kanagawa
+# Kanagawa_dragon
 include current-theme.conf
 # END_KITTY_THEME
 
 
 
 # BEGIN_KITTY_FONTS
-font_family      family="SauceCodePro Nerd Font Mono"
+font_family      family="ZedMono Nerd Font Mono"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto

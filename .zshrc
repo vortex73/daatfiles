@@ -76,6 +76,24 @@ fzf-history-search() {
 }
 zle -N fzf-history-search
 
+rgf() {
+  local file
+  file=$(rg --color=always --line-number "$1" | fzf --ansi --preview 'bat --style=numbers --color=always {1}' --delimiter ':' --preview-window=up:70%:wrap)
+  echo "$file" | cut -d':' -f1 | xargs -r $EDITOR
+}
+
+fzf-kill() {
+  ps -ef | sed 1d | fzf --preview "echo {}" --header="Select process to kill" | awk '{print $2}' | xargs kill -9
+}
+alias fkill='fzf-kill'
+
+bindkey '^T' autosuggest-or-fzf-history
+autosuggest-or-fzf-history() {
+  BUFFER=$(history | fzf --tac | sed 's/ *[0-9]* *//')
+  CURSOR=${#BUFFER}
+  zle reset-prompt
+}
+zle -N autosuggest-or-fzf-history
 
 trap nnn_cd EXIT
 unsetopt prompt_cr prompt_sp
@@ -100,16 +118,7 @@ alias ls="eza --icons --hyperlink"
 alias lo="eza -l --git-repos --icons"
 alias lt="eza --tree"
 alias lc="eza --git-ignore --tree --icons"
-alias seed="qemu-system-x86_64 \
--m 4096 \
--hda /home/vorrtt3x/vm/SEED-Ubuntu20.04.vdi \
--boot c \
--device virtio-net-pci,netdev=net00 \
--netdev id=net00,type=user,hostfwd=tcp::6969-:22,hostfwd=tcp::9870-:9870,hostfwd=tcp::9864-:9864,hostfwd=tcp::8088-:8088, \
--machine accel=kvm \
--cpu host -smp 6 \
--vga virtio
-"
+alias gco='git checkout $(git branch | fzf)'
 # PROMPT=' %F{#8ba4b0}%~%f${vcs_info_msg_0_} %F{50}% ℵ%f '
 PROMPT=' %F{#8ba4b0}$(if [[ $PWD == $HOME ]]; then echo "varchx"; else echo "${PWD/#$HOME/~}"; fi)%f${vcs_info_msg_0_} %F{50}% ℵ%f '
 setopt interactivecomments
@@ -124,3 +133,4 @@ export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
 alias history="history 1"
 # zprof
+

@@ -71,7 +71,7 @@ require('lspconfig').tailwindcss.setup {
 		on_attach = on_attach,
 		capabilities = capabilities,
 	}
-	require('lspconfig').pyright.setup {
+	require('lspconfig').basedpyright.setup {
 		on_attach = on_attach,
 		capabilities = capabilities,
 	}
