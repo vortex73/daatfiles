@@ -3,10 +3,10 @@ require "paq" {
 	"savq/paq-nvim",
 	"nvim-treesitter/nvim-treesitter-context",
 	'mikesmithgh/kitty-scrollback.nvim',
-	'echasnovski/mini.surround',
+	-- 'echasnovski/mini.surround',
 	'hat0uma/csvview.nvim',
 	'knubie/vim-kitty-navigator',
-	"tris203/precognition.nvim",
+	-- "tris203/precognition.nvim",
 	'MunifTanjim/prettier.nvim',
 	'sainnhe/sonokai',
 	'mfussenegger/nvim-jdtls',
@@ -14,7 +14,7 @@ require "paq" {
 	-- 'christoomey/vim-tmux-navigator',
 	'onsails/lspkind-nvim',
 	'ibhagwan/fzf-lua',
-	{'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
+	-- {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
 	'hrsh7th/cmp-nvim-lsp',
 	'windwp/nvim-autopairs',
 	'hrsh7th/cmp-path',
@@ -29,14 +29,43 @@ require "paq" {
 	{ "lervag/vimtex", opt = true },
 	'fedepujol/move.nvim',
 	{ 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-	'nvim-lua/plenary.nvim',
-	'epwalsh/obsidian.nvim',
+	-- 'nvim-lua/plenary.nvim',
+	-- 'epwalsh/obsidian.nvim',
 }
 
+require("prettier").setup({
+	bin = 'prettier',
+	filetypes = {
+		"css", "javascript", "typescript", "json", "graphql", "markdown"
+	}
+})
+
+local function get_git_root()
+  local git_dir = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+  if vim.v.shell_error == 0 then
+    return git_dir
+  else
+    return vim.fn.getcwd()
+  end
+end
+
+
+vim.g.loaded_python3_provider = 1
+
+local disabled_built_ins = {
+	"gzip", "zip", "zipPlugin", "tar", "tarPlugin", "getscript", "getscriptPlugin",
+	"vimball", "vimballPlugin", "2html_plugin", "logipat", "netrw", "netrwPlugin", "matchparen"
+}
+
+for _, plugin in pairs(disabled_built_ins) do
+	vim.g["loaded_" .. plugin] = 1
+end
+
+local opts = { noremap = true, silent = true }
 
 require 'lsp'
 require('blame').setup()
-require('mini.surround').setup()
+-- require('mini.surround').setup()
 -- Java Brainrot
 local jdtls = require('jdtls')
 
@@ -119,10 +148,6 @@ require 'nvim-treesitter.configs'.setup{
 	highlight = {
 		enable = true,
 	},
-	playground = {
-		enable = true,
-		updatetime=25,
-	},
 	incremental_selection = {
 		enable = true,
 		keymaps = {
@@ -135,12 +160,23 @@ require 'nvim-treesitter.configs'.setup{
 }
 
 -- My Keybindings
+
 vim.g.mapleader = " "
+
+-- Fzf KeyMaps
+vim.keymap.set('n', '<leader>fg', ":FzfLua grep<CR>", { desc = "Search (grep) in CWD", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>fw', ":FzfLua grep_cword<CR>", { desc = "Search current word", noremap = true, silent = true })
+vim.keymap.set('v', '<leader>fv', ":FzfLua grep_visual<CR>", { desc = "Search visual selection", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>fr', ":FzfLua live_grep_resume<CR>", { desc = "Resume last grep", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>fb', ":FzfLua grep_curbuf<CR>", { desc = "Search in current buffer", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>fl', ":FzfLua live_grep<CR>", { desc = "Live grep", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>fp', function()
+  require("fzf-lua").live_grep({ cwd = get_git_root() })
+end, { desc = "Grep through project (CWD)", noremap = true, silent = true })
 vim.keymap.set("n","<leader>tu",vim.cmd.UndotreeToggle)
 vim.keymap.set("n","<leader>pv",vim.cmd.Ex)
 vim.keymap.set('n', '<A-j>', ':MoveLine(1)<CR>', opts)
-vim.keymap.set('n', '<A-k>', ':MoveLine(-1)<CR>', opts)
-vim.keymap.set('n', '<A-h>', ':MoveWord(1)<CR>', opts)
+vim.keymap.set('n', '<A-k>', ':MoveLine(-1)<CR>', opts) vim.keymap.set('n', '<A-h>', ':MoveWord(1)<CR>', opts)
 vim.keymap.set('n', '<A-l>', ':MoveWord(-1)<CR>', opts)
 vim.keymap.set('v', '<A-j>', ':MoveBlock(1)<CR>', opts)
 vim.keymap.set('v', '<A-k>', ':MoveBlock(-1)<CR>', opts)
@@ -148,16 +184,8 @@ vim.keymap.set('n', '<C-h>', ':TmuxNavigateLeft<CR>',opts)
 vim.keymap.set('n', '<C-l>', ':TmuxNavigateRight<CR>',opts)
 vim.keymap.set('n', '<C-j>', ':TmuxNavigateDown<CR>',opts)
 vim.keymap.set('n', '<C-k>', ':TmuxNavigateUp<CR>',opts)
-vim.keymap.set('n', '<C-m>', ':FzfLua buffers<CR>', opts)
-vim.keymap.set('n', '<C-g>', ':FzfLua live_grep<CR>', opts)
-vim.keymap.set('n', '<leader>fs', ':FzfLua live_grep_resume<CR>', opts)
-vim.keymap.set('n', '<leader>fw', ':FzfLua grep_curbuf<CR>', opts)
 vim.keymap.set('n', '<leader>fq', ':FzfLua quickfix<CR>', opts)
-vim.keymap.set('n', '<leader>ff', ':FzfLua git_status<CR>', opts)
 vim.keymap.set('n', '<leader>fa', ':FzfLua lsp_code_actions<CR>', opts)
-vim.keymap.set('n', '<leader>os', ':ObsidianSearch<CR>',opts)
-vim.keymap.set('n', '<leader>on', ':ObsidianNew<CR>',opts)
-vim.keymap.set('n', '<leader>ow', ':ObsidianWorkspace<CR>',opts)
 vim.keymap.set("n", "<c-P>","<cmd>lua require('fzf-lua').files()<CR>", { silent = true })
 vim.keymap.set("i", "jk", "<ESC>", opts)
 vim.keymap.set("n", "ty", ":nohl<CR>", opts)
@@ -202,6 +230,7 @@ vim.cmd('set inccommand=split')
 -- vim.cmd('set expandtab')
 -- vim.opt.laststatus = 0
 
+vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", fg = "#ffffff" })
 vim.o.tabline = '%!v:lua.MyTabLine()'
 
 local cmp = require('cmp')

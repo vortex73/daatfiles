@@ -30,7 +30,7 @@ XF86MonBrightnessDown
 # program launcher
 super + @space
   rofi -matching fuzzy -theme ~/.config/rofi/themes/sed.rasi -show drun ssh filebrowser -display-combi RUN:
-super + k
+super + alt + k
     splatmoji copy
 ctrl + shift + f 
   rofi -theme ~/.config/rofi/themes/sed.rasi -show filebrowser -display-combi WINDOW:
