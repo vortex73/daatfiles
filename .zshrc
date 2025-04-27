@@ -12,7 +12,7 @@ export KEYTIMEOUT=1
 bindkey "^H" backward-delete-char
 bindkey "^?" backward-delete-char
 bindkey -v '^K' up-line-or-history
-bindkey '^R' history-incremental-search-backward
+# bindkey '^R' history-incremental-search-backward
 alias neofetch="fastfetch"
 alias sx="startx"
 alias space="dust"
@@ -28,7 +28,6 @@ precmd() { vcs_info }
 compinit -C
 export VISUAL=nvim
 export EDITOR="$VISUAL"
-plugins=(git shh-agent)
 if test -n "$KITTY_INSTALLATION_DIR"; then
     export KITTY_SHELL_INTEGRATION="enabled"
     autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
@@ -67,7 +66,7 @@ n ()
     }
 }
 
-bindkey '^R' fzf-history-search
+# bindkey '^R' fzf-history-search
 
 fzf-history-search() {
     BUFFER=$(history | fzf --tac | sed 's/ *[0-9]* *//')
@@ -96,6 +95,7 @@ autosuggest-or-fzf-history() {
 zle -N autosuggest-or-fzf-history
 
 trap nnn_cd EXIT
+setopt autocd
 unsetopt prompt_cr prompt_sp
 zstyle ':vcs_info:git:*' formats ' on %F{#87a987}%b%f'
 setopt PROMPT_SUBST
@@ -133,7 +133,8 @@ export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
 alias history="history 1"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+source /usr/share/fzf/key-bindings.zsh
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 # zprof

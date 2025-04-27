@@ -118,16 +118,31 @@ lspconfig.millet.setup({
 })
 
 -- Java (special setup)
+-- Java (special setup)
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "java",
 	callback = function()
-		local jdtls = require("jdtls")
+		local jdtls_status, jdtls = pcall(require, "jdtls")
+		if not jdtls_status then
+			vim.notify("jdtls not found. Please install 'nvim-jdtls'.", vim.log.levels.ERROR)
+			return
+		end
 
-		-- Set the workspace directory
+		-- Get current project name
 		local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 		local workspace_dir = "/home/vorrtt3x/.cache/jdtls/workspace/" .. project_name
 
-		-- Config for JDTLS
+		-- Path to JDTLS launcher jar
+		local launcher_path = "/home/vorrtt3x/.java/java/jdtls/plugins/"
+		local jar_pattern = launcher_path .. "org.eclipse.equinox.launcher_*.jar"
+		local jar = vim.fn.glob(jar_pattern)
+
+		if jar == "" then
+			vim.notify("JDTLS launcher jar not found in: " .. jar_pattern, vim.log.levels.ERROR)
+			return
+		end
+
+		-- Full config
 		local config = {
 			cmd = {
 				"/usr/lib/jvm/java-23-openjdk/bin/java",
@@ -140,18 +155,26 @@ vim.api.nvim_create_autocmd("FileType", {
 				"--add-modules=ALL-SYSTEM",
 				"--add-opens", "java.base/java.util=ALL-UNNAMED",
 				"--add-opens", "java.base/java.lang=ALL-UNNAMED",
-				"-jar", "/home/vorrtt3x/.java/java/jdtls/plugins/org.eclipse.equinox.launcher_1.6.900.v20240613-2009.jar",
+				"-jar", jar,
 				"-configuration", "/home/vorrtt3x/.java/java/jdtls/config_linux",
 				"-data", workspace_dir,
 			},
 			root_dir = jdtls.setup.find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
-			settings = { java = {} },
-			init_options = { bundles = {} },
+			settings = {
+				java = {
+					format = {
+						enabled = true,
+					},
+				},
+			},
+			init_options = {
+				bundles = {},
+			},
 			on_attach = on_attach,
 			capabilities = capabilities,
 		}
 
-		-- Start or attach JDTLS
+		-- Start or attach to LSP
 		jdtls.start_or_attach(config)
 	end,
 })

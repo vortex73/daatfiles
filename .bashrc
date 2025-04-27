@@ -29,4 +29,4 @@ function bigboi(){
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
-export PS1="${wht}[${cyn}\w\[\033[32m\]\[\033[00m\]${wht}] ${grn} ${wht} "
+export PS1="${wht}[${cyn}\w\[\033[32m\]\[\033[00m\]${wht}] ${grn} ${wht}"
