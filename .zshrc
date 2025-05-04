@@ -119,6 +119,9 @@ alias lo="eza -l --git-repos --icons"
 alias lt="eza --tree"
 alias lc="eza --git-ignore --tree --icons"
 alias gco='git checkout $(git branch | fzf)'
+alias vf='nvim $(find . -type f | fzf)'
+alias pf='fzf --preview "bat --style=numbers --color=always --line-range=:500 {}"'
+alias fd='cd $(find . -type d | fzf)'
 # PROMPT=' %F{#8ba4b0}%~%f${vcs_info_msg_0_} %F{50}% ℵ%f '
 PROMPT=' %F{#8ba4b0}$(if [[ $PWD == $HOME ]]; then echo "varchx"; else echo "${PWD/#$HOME/~}"; fi)%f${vcs_info_msg_0_} %F{50}% ℵ%f '
 setopt interactivecomments
