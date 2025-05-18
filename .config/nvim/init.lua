@@ -200,6 +200,14 @@ vim.opt.clipboard = "unnamedplus"
 require('nvim-autopairs').setup()
 require("ibl").setup()
 vim.cmd [[set cmdheight=0]]
+vim.keymap.set("n", "<leader>ch", function()
+  if vim.o.cmdheight == 0 then
+    vim.o.cmdheight = 1
+  else
+    vim.o.cmdheight = 0
+  end
+end, { desc = "Toggle cmdheight" })
+
 vim.lsp.inlay_hint.enable()
 vim.opt.foldcolumn = "0"
 vim.opt.guicursor = "i:block" 
