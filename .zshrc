@@ -136,6 +136,8 @@ export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
 alias history="history 1"
 
+alias tornado="kitten ssh root@139.59.37.177 -i ~/.ssh/digocean"
+
 source /usr/share/fzf/key-bindings.zsh
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
