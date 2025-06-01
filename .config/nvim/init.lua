@@ -2,17 +2,20 @@ vim.loader.enable()
 require "paq" {
 	"savq/paq-nvim",
 	"nvim-treesitter/nvim-treesitter-context",
-	'mikesmithgh/kitty-scrollback.nvim',
+	-- 'mikesmithgh/kitty-scrollback.nvim',
 	-- 'echasnovski/mini.surround',
-	'hat0uma/csvview.nvim',
+	-- 'hat0uma/csvview.nvim',
 	'knubie/vim-kitty-navigator',
 	-- "tris203/precognition.nvim",
 	'MunifTanjim/prettier.nvim',
-	'sainnhe/sonokai',
-	'mfussenegger/nvim-jdtls',
+	-- 'sainnhe/sonokai',
+	 'rebelot/kanagawa.nvim',
+	-- 'mfussenegger/nvim-jdtls',
 	"FabijanZulj/blame.nvim",
 	-- 'christoomey/vim-tmux-navigator',
 	'onsails/lspkind-nvim',
+    -- 'hrsh7th/vim-vsnip',
+
 	'ibhagwan/fzf-lua',
 	-- {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
 	'hrsh7th/cmp-nvim-lsp',
@@ -26,7 +29,7 @@ require "paq" {
 	'saadparwaiz1/cmp_luasnip',
 	"rafamadriz/friendly-snippets",
 	'L3MON4D3/LuaSnip',
-	{ "lervag/vimtex", opt = true },
+	-- { "lervag/vimtex", opt = true },
 	'fedepujol/move.nvim',
 	{ 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
 	-- 'nvim-lua/plenary.nvim',
@@ -40,6 +43,8 @@ require("prettier").setup({
 	}
 })
 
+local luasnip = require('luasnip')
+require('fzf-lua').register_ui_select()
 local function get_git_root()
   local git_dir = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
   if vim.v.shell_error == 0 then
@@ -67,63 +72,63 @@ require 'lsp'
 require('blame').setup()
 -- require('mini.surround').setup()
 -- Java Brainrot
-local jdtls = require('jdtls')
+-- local jdtls = require('jdtls')
 
-local function find_root()
-	local root_markers = {'gradlew', '.git', 'mvnw', 'pom.xml', 'build.gradle'}
-	local found_root = vim.fs.find(root_markers, { upward = true })[1]
-	if found_root then
-		return vim.fs.dirname(found_root)
-	else
-		return vim.fn.getcwd()
-	end
-end
+-- local function find_root()
+-- 	local root_markers = {'gradlew', '.git', 'mvnw', 'pom.xml', 'build.gradle'}
+-- 	local found_root = vim.fs.find(root_markers, { upward = true })[1]
+-- 	if found_root then
+-- 		return vim.fs.dirname(found_root)
+-- 	else
+-- 		return vim.fn.getcwd()
+-- 	end
+-- end
+--
+-- local function setup_jdtls()
+-- 	if vim.bo.buftype ~= '' then
+-- 		print("Cannot setup jdtls: No valid buffer")
+-- 		return
+-- 	end
+--
+-- 	local root_dir = find_root()
+-- 	if not root_dir or root_dir == "" then
+-- 		print("Could not determine project root directory")
+-- 		return
+-- 	end
+--
+-- 	if vim.bo.filetype ~= 'java' then
+-- 		print("Not a Java file, skipping jdtls setup")
+-- 		return
+-- 	end
+--
+-- 	local config = {
+-- 		cmd = {'jdtls'},
+-- 		root_dir = root_dir,
+-- 		settings = {
+-- 			java = {
+-- 				contentProvider = { preferred = 'fernflower' },
+-- 			},
+-- 		},
+-- 		on_attach = function(client, bufnr)
+-- 			vim.api.nvim_create_autocmd("BufEnter", {
+-- 				pattern = "*.java",
+-- 				callback = function()
+-- 					jdtls.start_or_attach(config)
+-- 				end
+-- 			})
+-- 		end
+-- 	}
+--
+-- 	local ok, err = pcall(jdtls.start_or_attach, config)
+-- 	if not ok then
+-- 		print("Error starting jdtls: " .. tostring(err))
+-- 	end
+-- end
 
-local function setup_jdtls()
-	if vim.bo.buftype ~= '' then
-		print("Cannot setup jdtls: No valid buffer")
-		return
-	end
-
-	local root_dir = find_root()
-	if not root_dir or root_dir == "" then
-		print("Could not determine project root directory")
-		return
-	end
-
-	if vim.bo.filetype ~= 'java' then
-		print("Not a Java file, skipping jdtls setup")
-		return
-	end
-
-	local config = {
-		cmd = {'jdtls'},
-		root_dir = root_dir,
-		settings = {
-			java = {
-				contentProvider = { preferred = 'fernflower' },
-			},
-		},
-		on_attach = function(client, bufnr)
-			vim.api.nvim_create_autocmd("BufEnter", {
-				pattern = "*.java",
-				callback = function()
-					jdtls.start_or_attach(config)
-				end
-			})
-		end
-	}
-
-	local ok, err = pcall(jdtls.start_or_attach, config)
-	if not ok then
-		print("Error starting jdtls: " .. tostring(err))
-	end
-end
-
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "java",
-	callback = setup_jdtls
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = "java",
+-- 	callback = setup_jdtls
+-- })
 require('move').setup({
 	line = {
 		enable = true, -- Enables line movement
@@ -140,7 +145,7 @@ require('move').setup({
 		enable = false -- Enables char movement
 	}
 })
-require('kitty-scrollback').setup()
+-- require('kitty-scrollback').setup()
 require 'nvim-treesitter.configs'.setup{
 	ensure_installed = {"c","cpp","lua","python","markdown","zig","nim","html","css"},
 	sync_install = false,
@@ -204,7 +209,24 @@ vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
 vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
 vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none' })
 vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'none' })
-vim.cmd.colorscheme('sonokai')
+-- vim.cmd.colorscheme('sonokai')
+require('kanagawa').setup({
+    undercurl = true,
+    commentStyle = { italic = true },
+    functionStyle = {},
+    keywordStyle = { italic = true},
+    statementStyle = { bold = true },
+    typeStyle = {},
+    variablebuiltinStyle = { italic = true},
+    specialReturn = true,
+    specialException = true,
+    -- transparent = true,
+    -- dimInactive = false,
+    colors = {},
+    theme = "wave" -- Available: "default", "wave", "lotus", "dragon"
+})
+
+vim.cmd.colorscheme('kanagawa')
 vim.opt.clipboard = "unnamedplus"
 require('nvim-autopairs').setup()
 require("ibl").setup()
@@ -234,8 +256,8 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.updatetime = 0
 vim.opt.conceallevel = 1
-vim.opt.listchars = { tab = "».", trail = "~", extends= "→" ,precedes= "←",nbsp= "+" }
-vim.opt.list = true
+-- vim.opt.listchars = { tab = "».", trail = "~", extends= "→" ,precedes= "←",nbsp= "+" }
+-- vim.opt.list = true
 vim.api.nvim_set_hl(0, 'Tab', { fg = '#D3D3D3' })
 -- Mapping for ;; (search and replace with no prompt)
 vim.api.nvim_set_keymap('n', ';;', ':%s:::g<Left><Left><Left>', { noremap = true, silent = false })
@@ -248,31 +270,8 @@ vim.cmd('set inccommand=split')
 -- vim.opt.laststatus = 0
 
 vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", fg = "#ffffff" })
-vim.o.tabline = '%!v:lua.MyTabLine()'
+-- vim.o.tabline = '%!v:lua.MyTabLine()'
 
-local cmp = require('cmp')
-cmp.setup({
-	mapping = {
-		-- This makes Tab insert a tab character when no completion menu is visible
-		['<Tab>'] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			else
-				fallback()
-			end
-		end, { 'i', 's' }),
-
-		['<S-Tab>'] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			else
-				fallback()
-			end
-		end, { 'i', 's' }),
-
-		['<CR>'] = cmp.mapping.confirm({ select = true }),
-	},
-})
 
 -- function _G.MyTabLine()
 -- 	local tabline = ''
