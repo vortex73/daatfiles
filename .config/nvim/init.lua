@@ -2,6 +2,8 @@ vim.loader.enable()
 require "paq" {
 	"savq/paq-nvim",
 	"nvim-treesitter/nvim-treesitter-context",
+	'voldikss/vim-floaterm',
+	'voldikss/fzf-floaterm',
 	-- 'mikesmithgh/kitty-scrollback.nvim',
 	-- 'echasnovski/mini.surround',
 	-- 'hat0uma/csvview.nvim',
@@ -243,6 +245,17 @@ require('kanagawa').setup({
     colors = {},
     theme = "wave" -- Available: "default", "wave", "lotus", "dragon"
 })
+vim.keymap.set('n', '<leader>tt', ':FloatermToggle<CR>', { desc = "Toggle terminal", noremap = true, silent = true })
+vim.keymap.set('t', '<leader>tt', '<C-\\><C-n>:FloatermToggle<CR>', { desc = "Toggle terminal", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>tn', ':FloatermNew<CR>', { desc = "New terminal", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>ts', ':Floaterms<CR>', { desc = "Switch terminal", noremap = true, silent = true })
+vim.keymap.set('t', '<leader>ts', '<C-\\><C-n>:Floaterms<CR>', { desc = "Switch terminal", noremap = true, silent = true })
+vim.g.floaterm_position = 'center'
+vim.g.floaterm_width = 0.9
+vim.g.floaterm_height = 0.8
+vim.g.floaterm_borderchars = '─│─│╭╮╯╰'
+
+
 
 vim.cmd.colorscheme('kanagawa')
 vim.opt.clipboard = "unnamedplus"
