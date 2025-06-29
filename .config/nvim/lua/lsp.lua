@@ -66,7 +66,7 @@ lspconfig.html.setup({
 })
 
 -- Python
-lspconfig.basedpyright.setup({
+lspconfig.pyright.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
 })

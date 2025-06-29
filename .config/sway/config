@@ -367,4 +367,13 @@ bindsym $mod+Down move down 20
 bindsym $mod+Up move up 20
 bindsym $mod+Right move right 20
 
+exec_always {
+    swaymsg workspace number 1
+    swaymsg workspace number 2
+    swaymsg workspace number 3
+    swaymsg workspace number 4
+    swaymsg workspace number 5
+    swaymsg workspace number 1  # Return to default workspace
+}
+
 include @sysconfdir@/sway/config.d/*
