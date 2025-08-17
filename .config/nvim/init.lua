@@ -272,7 +272,7 @@ end, { desc = "Toggle cmdheight" })
 
 vim.lsp.inlay_hint.enable()
 vim.opt.foldcolumn = "0"
-vim.opt.guicursor = "i:block" 
+vim.opt.guicursor = "i:block"
 vim.opt.nu = true
 vim.opt.relativenumber = true
 vim.opt.swapfile = false
@@ -299,7 +299,27 @@ vim.cmd('set shiftwidth=4')
 vim.cmd('set inccommand=split')
 -- vim.cmd('set expandtab')
 -- vim.opt.laststatus = 0
+local function trim_whitespace()
+  local save_cursor = vim.fn.winsaveview()
+  vim.cmd([[keeppatterns %s/\s\+$//e]])
+  vim.fn.winrestview(save_cursor)
+end
 
+vim.opt.list = true
+vim.opt.listchars = {
+  tab = "  ",
+  nbsp = "␣",
+  trail = "•",
+  extends = "⟩",
+  precedes = "⟨"
+}
+
+vim.api.nvim_set_hl(0, 'Whitespace', { fg = '#444444' })
+vim.api.nvim_set_hl(0, 'SpecialKey', { fg = '#666666' })
+
+vim.api.nvim_create_user_command('TrimWhitespace', trim_whitespace, {})
+
+vim.keymap.set('n', '<leader>tw', trim_whitespace, { desc = "Trim trailing whitespace", noremap = true, silent = true })
 vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", fg = "#ffffff" })
 -- vim.o.tabline = '%!v:lua.MyTabLine()'
 
