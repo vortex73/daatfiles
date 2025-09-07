@@ -4,22 +4,12 @@ require "paq" {
 	"nvim-treesitter/nvim-treesitter-context",
 	'voldikss/vim-floaterm',
 	'voldikss/fzf-floaterm',
-	-- 'mikesmithgh/kitty-scrollback.nvim',
-	-- 'echasnovski/mini.surround',
-	-- 'hat0uma/csvview.nvim',
 	'knubie/vim-kitty-navigator',
-	-- "tris203/precognition.nvim",
 	'MunifTanjim/prettier.nvim',
-	-- 'sainnhe/sonokai',
 	 'rebelot/kanagawa.nvim',
-	-- 'mfussenegger/nvim-jdtls',
 	"FabijanZulj/blame.nvim",
-	-- 'christoomey/vim-tmux-navigator',
 	'onsails/lspkind-nvim',
-    -- 'hrsh7th/vim-vsnip',
-
 	'ibhagwan/fzf-lua',
-	-- {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
 	'hrsh7th/cmp-nvim-lsp',
 	'windwp/nvim-autopairs',
 	'hrsh7th/cmp-path',
@@ -31,11 +21,12 @@ require "paq" {
 	'saadparwaiz1/cmp_luasnip',
 	"rafamadriz/friendly-snippets",
 	'L3MON4D3/LuaSnip',
-	-- { "lervag/vimtex", opt = true },
 	'fedepujol/move.nvim',
+	"mfussenegger/nvim-dap",
+	"rcarriga/nvim-dap-ui",
+	"nvim-neotest/nvim-nio",
+	"theHamsta/nvim-dap-virtual-text",
 	{ 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-	-- 'nvim-lua/plenary.nvim',
-	-- 'epwalsh/obsidian.nvim',
 }
 
 require("prettier").setup({
@@ -87,66 +78,48 @@ require'treesitter-context'.setup{
 }
 
 require 'lsp'
+local dap = require('dap')
+local dapui = require('dapui')
+dapui.setup()
+require('nvim-dap-virtual-text').setup()
+dap.adapters.lldb = {
+    type = 'executable',
+    command = '/usr/bin/lldb-dap', -- or '/usr/bin/lldb-vscode' on some systems
+    name = 'lldb'
+}
+dap.configurations.c = {
+    {
+        name = 'Launch',
+        type = 'lldb', -- or 'codelldb' if using CodeLLDB
+        request = 'launch',
+        program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = {},
+    },
+}
+dap.configurations.cpp = dap.configurations.c
+
+vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+vim.fn.sign_define('DapStopped', { text = '➡️', texthl = 'DapStopped', linehl = 'DebugLineHL', numhl = '' })
+vim.fn.sign_define('DapBreakpointCondition', { text = '🔶', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpointRejected', { text = '⚠️', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+
+dap.listeners.before.attach.dapui_config = function()
+    dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+    dapui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+    dapui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+    dapui.close()
+end
 require('blame').setup()
--- require('mini.surround').setup()
--- Java Brainrot
--- local jdtls = require('jdtls')
-
--- local function find_root()
--- 	local root_markers = {'gradlew', '.git', 'mvnw', 'pom.xml', 'build.gradle'}
--- 	local found_root = vim.fs.find(root_markers, { upward = true })[1]
--- 	if found_root then
--- 		return vim.fs.dirname(found_root)
--- 	else
--- 		return vim.fn.getcwd()
--- 	end
--- end
---
--- local function setup_jdtls()
--- 	if vim.bo.buftype ~= '' then
--- 		print("Cannot setup jdtls: No valid buffer")
--- 		return
--- 	end
---
--- 	local root_dir = find_root()
--- 	if not root_dir or root_dir == "" then
--- 		print("Could not determine project root directory")
--- 		return
--- 	end
---
--- 	if vim.bo.filetype ~= 'java' then
--- 		print("Not a Java file, skipping jdtls setup")
--- 		return
--- 	end
---
--- 	local config = {
--- 		cmd = {'jdtls'},
--- 		root_dir = root_dir,
--- 		settings = {
--- 			java = {
--- 				contentProvider = { preferred = 'fernflower' },
--- 			},
--- 		},
--- 		on_attach = function(client, bufnr)
--- 			vim.api.nvim_create_autocmd("BufEnter", {
--- 				pattern = "*.java",
--- 				callback = function()
--- 					jdtls.start_or_attach(config)
--- 				end
--- 			})
--- 		end
--- 	}
---
--- 	local ok, err = pcall(jdtls.start_or_attach, config)
--- 	if not ok then
--- 		print("Error starting jdtls: " .. tostring(err))
--- 	end
--- end
-
--- vim.api.nvim_create_autocmd("FileType", {
--- 	pattern = "java",
--- 	callback = setup_jdtls
--- })
 require('move').setup({
 	line = {
 		enable = true, -- Enables line movement
@@ -185,6 +158,16 @@ require 'nvim-treesitter.configs'.setup{
 -- My Keybindings
 
 vim.g.mapleader = " "
+
+vim.keymap.set('n', '<leader>db', function() dap.toggle_breakpoint() end, { desc = "Toggle Breakpoint", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>dc', function() dap.continue() end, { desc = "Continue", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>ds', function() dap.step_over() end, { desc = "Step Over", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>di', function() dap.step_into() end, { desc = "Step Into", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>do', function() dap.step_out() end, { desc = "Step Out", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>dr', function() dap.repl.open() end, { desc = "Open REPL", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>dl', function() dap.run_last() end, { desc = "Run Last", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>dt', function() dap.terminate() end, { desc = "Terminate", noremap = true, silent = true })
+vim.keymap.set('n', '<leader>du', function() dapui.toggle() end, { desc = "Toggle DAP UI", noremap = true, silent = true })
 
 -- Fzf KeyMaps
 vim.keymap.set('n', '<leader>fg', ":FzfLua grep<CR>", { desc = "Search (grep) in CWD", noremap = true, silent = true })
@@ -321,26 +304,4 @@ vim.api.nvim_create_user_command('TrimWhitespace', trim_whitespace, {})
 
 vim.keymap.set('n', '<leader>tw', trim_whitespace, { desc = "Trim trailing whitespace", noremap = true, silent = true })
 vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", fg = "#ffffff" })
--- vim.o.tabline = '%!v:lua.MyTabLine()'
-
-
--- function _G.MyTabLine()
--- 	local tabline = ''
--- 	local tabcount = vim.fn.tabpagenr('$')
--- 	local current_tab = vim.fn.tabpagenr()
---
--- 	for i = 1, tabcount do
--- 		local tab_name = vim.fn.gettabvar(i, 'tabname', '[No Name]')
--- 		if i == current_tab then
--- 			tabline = tabline .. '%#TabLineSel# ' .. i .. ': ' .. tab_name .. ' '
--- 		else
--- 			tabline = tabline .. '%#TabLine# ' .. i .. ': ' .. tab_name .. ' '
--- 		end
--- 	end
---
--- 	return tabline
--- end
---
--- vim.api.nvim_set_hl(0, 'TabLine', {bg='#2e2e2e', fg='#dcdccc'})
--- vim.api.nvim_set_hl(0, 'TabLineSel', {bg='#5f5f5f', fg='#ffffff'})
 
