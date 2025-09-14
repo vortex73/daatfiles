@@ -145,3 +145,4 @@ source /usr/share/fzf/key-bindings.zsh
 # zprof
 export PICO_SDK_PATH=~/cloned/pico-sdk
 export PATH="/home/vorrtt3x/.pixi/bin:$PATH"
+

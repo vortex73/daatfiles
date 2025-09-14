@@ -287,7 +287,6 @@ local function trim_whitespace()
   vim.cmd([[keeppatterns %s/\s\+$//e]])
   vim.fn.winrestview(save_cursor)
 end
-
 vim.opt.list = true
 vim.opt.listchars = {
   tab = "  ",
