@@ -3,7 +3,7 @@
 #
 # Flameshot
 super + shift + s
-	QT_SCALE_FACTOR=0.5 flameshot gui
+	 flameshot gui
 super + shift + a
 	flameshot full
 super + shift + p 
