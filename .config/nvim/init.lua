@@ -1,6 +1,7 @@
 vim.loader.enable()
 require "paq" {
 	"savq/paq-nvim",
+	"hat0uma/csvview.nvim",
 	"nvim-treesitter/nvim-treesitter-context",
 	'voldikss/vim-floaterm',
 	'voldikss/fzf-floaterm',
@@ -35,6 +36,7 @@ require("prettier").setup({
 		"css", "javascript", "typescript", "json", "graphql", "markdown"
 	}
 })
+require('csvview').setup()
 
 local luasnip = require('luasnip')
 require('fzf-lua').register_ui_select()
