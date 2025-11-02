@@ -40,4 +40,5 @@ xsettingsd &
 picom -f &
 polybar &
 nitrogen --restore &
+dunst &
 exec bspwm
